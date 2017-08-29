@@ -1,0 +1,67 @@
+{%
+  if session["admin_chk"] is not defined
+%}
+     <script language="javascript">
+         alert("세션 정보가 존재하지 않습니다. 로그인 정보가 없습니다!!!");
+         location.href="/admin";
+     </script>
+{%
+  endif
+%}
+<!doctype html>
+<html>
+<head>
+  <title>MES main</title>
+  <meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="/static/css/common.css" />
+  <link rel="stylesheet" href="/static/css/layout.css" />
+	<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+	<link href="/static/css/select2.min.css" rel="stylesheet">
+	<link href="/static/css/select2-bootstrap.min.css" rel="stylesheet">
+  <link href="http://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
+  <link href="https://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css" rel="stylesheet">
+	<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+	<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+	<script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  <script src="/static/js/formform.js"></script>
+  <script src="/static/js/alarm.js"></script>
+  <script src="/static/js/jsonlint.js"></script>
+  <script src="/static/js/formatter.js"></script>
+
+  
+	<style>
+    //.container { margin:150px auto 50px auto;}
+		#input-alert,
+		#form-demo-input {
+			font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
+		}
+	</style>
+	  
+</head>
+<body>
+        <div id="wrap">
+            <div id="header">  
+                <div class="head">
+                    <h1 class="logo fl_left"><a href="index.html">Menufacturing Execution System</a></h1>
+                    <div class="gnb fl_left">
+                        <ul>
+                            <li><a href="wind_time.html">BOM Management</a></li>
+                            <li><a href="wind_day.html">Worker Management</a></li>
+                            <li><a href="wind_month.html">Process Management</a></li>
+                            <li><a href="/MES/info/reg_list.php?conn_page=company_info">Company Management</a></li>
+                        </ul>
+                    </div>
+                    <div class="login fl_right">
+                    	<img src="/MES/image/icon_member.png" style="padding-right:10px">
+                    	{% if session.logged_in %}
+                    		 [My Page] [<a href="/MES/member/sign_out.php">Sign-Out</a>]
+                    	{% else %}
+                    		 [<a href="/MES/member/member_register.php">Register</a>] [<a href="/MES/member/sign_in.php">Sign-In</a>]
+                    	{% endif %}
+                    	[<a href="/MES/admin/index.php">관리자 모드</a>]
+                    </div>
+                </div>
+            </div>

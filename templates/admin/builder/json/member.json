@@ -1,0 +1,57 @@
+[
+    {
+        "name": "username",
+        "label": "Account Name",
+        "type": "text",
+        "mandatory" : "true",
+        "view" : "true"
+    },
+    {
+        "name": "email",
+        "label": "E-mail(Accound ID)",
+        "type": "text",
+        "mandatory" : "true",
+        "view" : "true"
+    },
+    {
+        "name": "pass1",
+        "label": "Password",
+        "type": "password",
+        "mandatory" : "true",
+        "view" : "true"
+    },
+    {
+        "name": "pass2",
+        "label": "Re-Password",
+        "type": "password",
+        "mandatory" : "true"
+    },    
+    {
+        "name": "Phone",
+        "label": "Phone Number",
+        "type": "multi_text",
+        "datalist": [
+            { "name" : "phone1", "size" : "60", "maxlength" : "4", "IsNumber" : "true" },
+            { "name" : "phone2", "size" : "60", "maxlength" : "4", "IsNumber" : "true" },
+            { "name" : "phone3", "size" : "60", "maxlength" : "4", "IsNumber" : "true" }
+        ],
+        "mandatory" : "true",
+        "size" : "120",
+        "maxlength" : "4",
+        "view" : "true"
+    },    
+    {
+        "label": "Register",
+        "id": "btnReg",
+        "type": "button",
+        "class": "btn-default",
+        "icon": "ok"
+    },
+    {
+        "label": "Cancel",
+        "id" : "btnCancel",
+        "type": "button",
+        "class": "btn-default",
+        "icon": "ok"
+    }    
+]

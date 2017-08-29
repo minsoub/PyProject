@@ -1,0 +1,135 @@
+{% include "/admin/header/admin_header_edit.html" %}
+
+{% set info = result %}
+{% if info['page'] is not defined %}
+{%    set page = 1 %}
+{% endif  %}
+{% if info['conn_page'] is not defined %}
+{%    set conn_page = 'company_info'  %}
+{% endif %}
+
+  <div id="section"> 
+       <!-- Left Menu define  -->
+       {% include "/admin/menu/menu_inc.html" %}
+       <!-- Left Menu end   -->
+      <div class="container">
+       <h3>{{info['conn_name']}}</h3>
+ 
+ 		<!--  div class="search_box"  -->
+			<div class="col-md-6">
+				<form id="form_output" name="form_output">
+					<input type="hidden" id="_id" name="_id" value="{{info['_id']}}">
+					<input type="hidden" id="conn_page" name="conn_page" value="{{info['conn_page']}}">
+					<input type="hidden" id="mode" name="mode">
+					<input type="hidden" id="mkey" name="mkey" value="{{info['id']}}">
+				</form>
+			</div>
+			<div id="input-alert"></div>
+		<!--  /div  -->
+		
+		<div class="row" style="margin-top: 20px">
+
+		</div>                   
+   </div>
+ </div>
+<!--  form id="commonForm" name="commonForm"></form  -->
+     
+	<script>
+		var form;
+		$(document).ready(function() {
+			var demoInput, example, outputForm;
+
+			example = {{json_data | safe}};
+			example = JSON.stringify(example);
+			example = formatter.formatJson(example);
+
+			outputForm = $('#form_output');
+			outputForm.submit(function() {return false});
+			
+				var inputJson, formFields, inputAlert;
+
+				inputAlert = $('#input-alert');
+				inputAlert.empty();
+				try {
+					jsonlint.parse(example);
+				} catch(e) {
+					inputAlert.addAlert('danger', e.message.replace(/\n/g, '<br>'));
+					return
+				}
+				formFields = JSON.parse(example);
+				//outputForm.empty();
+				form = FormForm( outputForm, formFields );
+				try {
+					var newData = true;
+					if ("{{info['id']}}" != "") {
+					   newData = false;
+					}
+					form.render(newData);
+				} catch(e) {
+					inputAlert.addAlert('danger', e);
+				}
+				
+			  $("#btnReg").on("click", function(e){  
+				    e.preventDefault();
+				    fn_Register();  // formform.js에 정의함.
+			  });	
+			  $("#btnDel").on("click", function(e){  
+				    e.preventDefault();
+				    fn_Delete();  // formform.js에 정의함.
+			  });				  
+							
+		});
+		
+		function fn_Register()
+		{
+			 var chk = dataEmptyCheck(form);
+			 
+			 //alert("chk : " + chk);
+			 if (chk == true)
+			 {
+			     	// key, url register
+			     	form_output.method = "post";
+			     	form_output.action = "/admin/reg_save";
+			     	
+			     	if ("{{info['id']}}" != "") {
+			     	    form_output.mode.value = "upt";
+			     	}else {
+			     	    form_output.mode.value = "ins";
+			     	}
+			     	form_output.submit();
+			 }
+		}
+		
+		function fn_Delete()
+		{
+		   if(confirm("삭제를 하시겠습니까?"))
+		   {
+			     form_output.method = "post";
+			     form_output.action = "/admin/reg_save";
+			     	
+			     if ("{{info['id']}}" != "") {
+			 	       form_output.mode.value = "del";
+			 	       form_output.submit();
+			     }else {
+			           alert("삭제할 데이터가 없습니다!!!!");
+			     }
+
+			 }  
+		}
+		
+    $(function() {      
+	 	     var arr = form.getData(); 	     
+		     $.each(arr, function(key, value) {	     	  
+            if (value["cal"] == "true") {
+            	 
+       	       var data = value["name"];
+       	       $("input[name='"+data+"']").datepicker({
+       	   	      dateFormat: 'yy-mm-dd'
+       	       });
+            }
+		     });    	
+    });
+    		
+	</script>
+            
+{% include ['bottom.html'] %}

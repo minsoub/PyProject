@@ -1,0 +1,134 @@
+[
+    {
+        "name": "company_name",
+        "label": "사업자명",
+        "type": "text",
+        "mandatory" : "true",
+        "size" : "250",
+        "maxlength" : "50",
+        "view" : "true"
+    },
+    {
+        "name": "reg_no",
+        "label": "사업자 등록번호",
+        "type": "text",
+        "mandatory" : "true",
+        "size" : "120",
+        "maxlength" : "20",
+        "view" : "true"
+    },
+    {
+        "name": "cor_no",
+        "label": "법인등록번호",
+        "type": "text",
+        "mandatory" : "true",
+        "size" : "120",
+        "maxlength" : "20",
+        "view" : "true"
+    },
+    {
+        "name": "office_representative",
+        "label": "대표자",
+        "type": "text",
+        "mandatory" : "true",
+        "size" : "120",
+        "maxlength" : "20",
+        "view" : "true"
+    },
+    {
+        "name": "jumin",
+        "label": "주민등록번호",
+        "type": "multi_text",
+        "datalist": [
+            { "name" : "jumin1", "size" : "60", "maxlength" : "6", "IsNumber" : "true" },
+            { "name" : "jumin2", "size" : "60", "maxlength" : "7", "IsNumber" : "true" }
+        ],        
+        "mandatory" : "true",
+        "size" : "80",
+        "maxlength" : "4"
+    },  
+    {
+        "name": "post",
+        "label": "우편번호",
+        "type": "text",       
+        "mandatory" : "true",
+        "maxlength" : "7",
+        "size" : "80"
+    },    
+    {
+        "name": "addr1",
+        "label": "주소",
+        "type": "text",
+        "mandatory" : "true"
+    },  
+    {
+        "name": "addr2",
+        "label": "상세주소",
+        "type": "text",
+        "mandatory" : "true"
+    },         
+    {
+        "name": "Phone",
+        "label": "전화번호",
+        "type": "multi_text",
+        "datalist": [
+            { "name" : "phone1", "size" : "60", "maxlength" : "4", "IsNumber" : "true" },
+            { "name" : "phone2", "size" : "60", "maxlength" : "4", "IsNumber" : "true" },
+            { "name" : "phone3", "size" : "60", "maxlength" : "4", "IsNumber" : "true" }
+        ],
+        "mandatory" : "true",
+        "size" : "120",
+        "maxlength" : "4",
+        "view" : "true"
+    }, 
+    {
+        "name": "Fax",
+        "label": "Fax",
+        "type": "multi_text",
+        "datalist": [
+            { "name" : "fax1", "size" : "60", "maxlength" : "4", "IsNumber" : "true" },
+            { "name" : "fax2", "size" : "60", "maxlength" : "4", "IsNumber" : "true" },
+            { "name" : "fax3", "size" : "60", "maxlength" : "4", "IsNumber" : "true" }
+        ],
+        "mandatory" : "true",
+        "size" : "120",
+        "maxlength" : "4",
+        "view" : "true"
+    },  
+    {
+        "name": "biz_type",
+        "label": "업태",
+        "type": "text",
+        "mandatory" : "true"
+    },     
+    {
+        "name": "biz_kind",
+        "label": "업종",
+        "type": "text",
+        "mandatory" : "true"
+    }, 
+    {
+        "name": "crt_dt",
+        "label": "설립년월일",
+        "type": "text",
+        "mandatory" : "true",
+        "size" : "120",
+        "maxlength" : "10",
+        "cal" : "true"
+    },     
+               
+    {
+        "label": "Save",
+        "id": "btnReg",
+        "type": "button",
+        "class": "btn-default",
+        "icon": "ok"
+    },
+    {
+        "label": "Cancel",
+        "id" : "btnCancel",
+        "type": "button",
+        "class": "btn-default",
+        "icon": "ok"
+    }    
+]

@@ -1,0 +1,179 @@
+{% include "/admin/header/admin_header.html" %}
+
+{% if page is not defined %}
+{%    set page = 1 %}
+{% endif  %}
+{% if conn_page is not defined %}
+{%    set conn_page = 'company_info'  %}
+{%   endif %}
+{% set info = result['result'] %}
+
+            <div id="section"> 
+            	  <!-- Left Menu define  -->
+            	  {% include "/admin/menu/menu_inc.html" %}
+            	  <!-- Left Menu end   -->
+            	  
+                <div class="container_main">
+                    <h3>{{info['conn_name']}}</h3>
+{% if conn_page != 'company_info' %}
+                    <div class="search_box">
+                        <form action="" method="post" name="search">
+                            <fieldset>
+                                <legend>검색</legend>
+                                관측소별
+                                <select name="select_location" class="sel" style="margin-right:25px;margin-left:10px">
+                                </select>
+                                날짜
+                                <select name="select_year" class="sel" style="margin-left:10px">
+                                </select>
+                                <select name="select_month" class="sel" >
+                                </select>
+                                <select name="select_day" class="sel" >
+                                </select>
+                                <button type="button" class="btn_search" onclick="">검색</button>
+                            </fieldset>                             
+                        </form>
+                    </div>	    
+{% endif %}
+	                    <table class="table_list" style="margin-top:15px">
+		                        <thead>
+		                        	<tr>
+{% for data in json_content %}
+{%     if data['type'] == 'button' %}
+{%     elif data['view'] == 'true'  %}
+                                        <th>{{data['label']}}</th>
+{%     endif %}
+{% endfor %}
+                                        <th>Register Date</th>
+                                        <th>Last Modified</th>
+		                            </tr>
+		                        </thead>
+		                        <tbody>
+{% set found = [0] %}
+{% for doc in result['doc']  %}
+    <tr>
+{%     set mIdx = [0]  %}
+{%     for data in json_content %}
+{%         if mIdx[0] == 0 or mIdx[0] == 1 %}
+        <td><a href="javascript:fn_goView('{{doc['_id']}}');">{{doc[data['name']]}}</a></td>
+{%         else   %}
+{%              if data['type'] == 'multi_text' and data['view'] == 'true' %}
+{%                  set arr = data['datalist']  %}
+                   <td>
+{%                  set j = [0]  %}
+{%                  for d in arr   %}
+{%                     if j[0] > 0 %}-{% endif%}
+                       {{doc[d['name']]}}
+{%                     set k = j[0] + 1 %}
+{%                     set _= j.pop() %}
+{%                     set _= j.append(k) %}
+{%                  endfor  %}
+                   </td>
+{%              elif data['type'] == 'button' %}
+{%              elif data['view'] == 'true' %}
+                   <td>{{doc[data['name']]}}</td>
+{%              endif %}
+{%        endif  %}
+{%     set i = mIdx[0]+1 %}
+{%     set _ = mIdx.pop() %}
+{%     set _ = mIdx.append(i) %}
+{%     endfor %}
+        <td>{{doc['createDt']}}</td>
+        <td>{{doc['lastModified']}}</td>
+    </tr>
+{% set f = found[0] + 1 %}
+{% set _= found.pop() %}
+{% set _= found.append(f) %}
+{% endfor %}
+
+                            </tbody>
+                      </table>
+{% if conn_page != 'company_info' %}
+                    <div class="pageNate">
+                        <a class="start" id="start" href=""></a>
+                        <!--  a class="prev" href=""></a  -->
+                    {% for i in range(1, result['page_num'] +1) %}
+                        <a class="{%if i == result['page']%}selected{%endif%}" href="javascript:fn_goPage('{{i}}');">{{i}}</a>
+                    {% endfor %}
+                        <!--  a class="next" href=""></a  -->
+                        <a class="end" id="end" href=""></a>
+                    </div>
+{% endif %}
+
+        <br> <button type="button" class="btn_blue fl_right" onclick="" >List</button>  
+		    {% if result[conn_page] != 'company_info' %}<button type="button" id="create" class="btn_blue fl_right" onclick="" style="margin-right:10px">Register</button>
+		    {% elif conn_page == 'company_info' and found[0] == 0 %}
+		  	<button type="button" id="create" class="btn_blue fl_right" onclick="" style="margin-right:10px">Register</button>
+		    {% endif %}
+                </div>
+            </div>
+            
+<form id="commonForm" name="commonForm"></form>
+     
+<script type="text/javascript">
+	$(document).ready(function(){
+			$("#create").on("click", function(e){ //로그인 버튼
+				e.preventDefault();
+				fn_createProcess();
+			});	
+			$("#start").on("click", function(e) {   // prev button
+				e.preventDefault();
+				fn_prevProcess();
+		  });	
+		  $("#end").on("click", function(e) {   // end button
+		  	 e.preventDefault();
+		  	 fn_nextProcess();
+		  });
+	});
+	
+	function fn_createProcess(){
+			var comSubmit = new ComSubmit();
+			comSubmit.addParam("conn_page", "{{result['conn_page']}}");
+			comSubmit.addParam("page", "{{result['page']}}");
+			comSubmit.setUrl("/admin/reg_edit");
+			comSubmit.submit();
+	}
+	
+	function fn_goView(_id)
+	{
+		  var comSubmit = new ComSubmit();
+		  comSubmit.addParam("id", _id);
+		  comSubmit.addParam("conn_page", "{{result['conn_page']}}");
+		  comSubmit.addParam("page", "{{result['page']}}");
+		  comSubmit.setUrl("/admin/reg_edit");
+		  comSubmit.submit();
+		
+	}
+	function fn_prevProcess()
+	{
+	   if ("{{result['page']}}" != "1") {
+	      var comSubmit = new ComSubmit();
+	      var page = {{result['page']}} - 1;
+	      comSubmit.addParam("page", page);
+	      comSubmit.addParam("conn_page", "{{result['conn_page']}}");
+	      comSubmit.setUrl("/admin/reg_list");
+	      comSubmit.submit();
+	   }
+	}
+	function fn_nextProcess()
+	{
+	   if ({{result['page']}} < {{result['page_num']}}) {
+	      var comSubmit = new ComSubmit();
+	      var page = {{result['page']}} + 1;
+	      comSubmit.addParam("page", page);
+	      comSubmit.addParam("conn_page", "{{result['conn_page']}}");
+	      comSubmit.setUrl("/admin/reg_list");
+	      comSubmit.submit();
+	   }	
+	}
+	function fn_goPage(page)
+	{
+	      var comSubmit = new ComSubmit();	      
+	      comSubmit.addParam("page", page);
+	      comSubmit.addParam("conn_page", "{{result['conn_page']}}");
+	      comSubmit.setUrl("/admin/reg_list");
+	      comSubmit.submit();	
+	}
+</script>
+            
+{% include ['bottom.html'] %}

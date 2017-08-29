@@ -1,0 +1,82 @@
+{% extends "layout.html" %}
+
+{% block body %}
+
+            <div id="section"> 
+            	  <!-- Left Menu define  -->
+
+            	  <!-- Left Menu end   -->
+<form id="frm" name="frm">  
+        	  
+                <div class="container_main">
+                    
+                    
+
+                </div>
+            </div>
+</form>            
+<form id="commonForm" name="commonForm"></form>     
+     
+<script type="text/javascript">
+	$(document).ready(function(){
+			$("#signin").on("click", function(e){  
+				e.preventDefault();
+				fn_loginProcess();
+			});
+      $( "#id" ).keypress(function( event ) {
+        if ( event.which == 13 ) {
+           fn_loginProcess();
+        }
+      });
+      $( "#pass" ).keypress(function( event ) {
+        if ( event.which == 13 ) {
+           fn_loginProcess();
+        }
+      });
+			$("#cancel").on("click", function(e){  
+				e.preventDefault();
+				fn_cancelProcess();
+			});	
+				
+			$("#reg").on("click", function(e){  
+				e.preventDefault();
+				fn_regProcess();
+			});				
+	});
+	
+	function fn_loginProcess(){
+			if ($("#id").val() == "")
+			{
+				  alert("ID를 입력하지 않았습니다!!!");
+				  $("#id").focus();
+				  return;
+		  }
+			if ($("#pass").val() == "")
+			{
+				  alert("패스워드를 입력하지 않았습니다!!!");
+				  $("#pass").focus();
+				  return;
+		  }
+		  try 
+		  {
+          var comSubmit = new ComSubmit("frm");
+			    comSubmit.setUrl("sign_process.php");
+			    comSubmit.submit();		           
+		      		  	
+		  }catch(e)
+		  {
+		  		alert(E);
+		  }
+		  		  		  	  		  
+	}
+	
+	function fn_cancelProcess () {
+		   frm.reset();
+	}
+	
+	function fn_regProcess() {
+		  location.href="/MES/member/reg.php";
+	}
+</script>
+
+{% endblock %}

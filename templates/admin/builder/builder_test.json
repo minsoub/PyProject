@@ -1,0 +1,101 @@
+{"widget": {
+    "input": {
+        "title": "Compnay Name",
+        "inputItem":[
+          {
+            "name": "txtCompnayName",
+            "width": 80,
+            "height": 22,
+            "maxlength" : 20
+        }]
+    },
+    "input": {
+        "title": "Contact Number",
+        "inputItem":[
+          {
+            "name": "txtPhone1",
+            "width": 20,
+            "height": 22,
+            "maxlength" : 3,
+            "is_num" : true
+          },
+          {
+            "name": "txtPhone2",
+            "width": 20,
+            "height": 22,
+            "maxlength" : 4,  
+            "is_num" : true      
+          },
+          {
+            "name": "txtPhone3",
+            "width": 20,
+            "height": 22,
+            "maxlength" : 4,
+            "is_num" : true        
+          }
+        ]
+    },    
+    "input": {
+        "title": "Fac Number",
+        "inputItem":[
+          {
+            "name": "txtFax1",
+            "width": 20,
+            "height": 22,
+            "maxlength" : 3,
+            "is_num" : true
+          },
+          {
+            "name": "txtFax2",
+            "width": 20,
+            "height": 22,
+            "maxlength" : 4,  
+            "is_num" : true      
+          },
+          {
+            "name": "txtFax3",
+            "width": 20,
+            "height": 22,
+            "maxlength" : 4,
+            "is_num" : true        
+          }
+        ]
+    },     
+    "input": {
+        "title": "Compnay Address",
+        "inputItem":[
+          {
+            "name": "txtCompanyAddr",
+            "width": 250,
+            "height": 22,
+            "maxlength" : 200
+        }]
+    },   
+    "input": {
+        "title": "Website URL",
+        "inputItem":[
+          {
+            "name": "txtUrl",
+            "width": 250,
+            "height": 22,
+            "maxlength" : 200
+        }]
+    },      
+    "image": { 
+        "src": "Images/Sun.png",
+        "name": "sun1",
+        "hOffset": 250,
+        "vOffset": 250,
+        "alignment": "center"
+    },
+    "text": {
+        "data": "Click Here",
+        "size": 36,
+        "style": "bold",
+        "name": "text1",
+        "hOffset": 250,
+        "vOffset": 100,
+        "alignment": "center",
+        "onMouseUp": "sun1.opacity = (sun1.opacity / 100) * 90;"
+    }
+}}   

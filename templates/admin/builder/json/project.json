@@ -1,0 +1,35 @@
+[
+    {
+        "name": "project_name",
+        "label": "프로젝트명",
+        "type": "text",
+        "mandatory" : "true",
+        "size" : "250",
+        "maxlength" : "120",
+        "view" : "true"
+    },
+         
+    {
+        "name": "project_expl",
+        "label": "프로젝트설명",
+        "type": "text",
+        "mandatory" : "true",
+        "size" : "350",
+        "maxlength" : "500",
+        "view" : "true"
+    },               
+    {
+        "label": "Save",
+        "id": "btnReg",
+        "type": "button",
+        "class": "btn-default",
+        "icon": "ok"
+    },
+    {
+        "label": "Cancel",
+        "id" : "btnCancel",
+        "type": "button",
+        "class": "btn-default",
+        "icon": "ok"
+    }    
+]

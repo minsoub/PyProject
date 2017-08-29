@@ -1,0 +1,43 @@
+[
+    {
+        "name": "username",
+        "label": "Username",
+        "type": "text",
+        "maxlength" : 8,
+    },
+    {
+        "name": "email",
+        "label": "E-Mail",
+        "type": "text"
+    },
+    {
+        "name": "password",
+        "label": "Password",
+        "type": "password"
+    },
+    {
+        "name": "fruit",
+        "label": "Fruit",
+        "choices": [
+            [
+                "apple",
+                "Apple"
+            ],
+            [
+                "pear",
+                "Pear"
+            ],
+            [
+                "orange",
+                "Orange"
+            ]
+        ],
+        "type": "selectmultiple"
+    },
+    {
+        "label": "Submit",
+        "type": "submit",
+        "class": "btn-danger",
+        "icon": "ok"
+    }
+]
