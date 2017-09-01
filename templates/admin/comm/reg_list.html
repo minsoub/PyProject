@@ -124,13 +124,18 @@
 		  	 e.preventDefault();
 		  	 fn_nextProcess();
 		  });
+
+		  if ("{{msg}}" != "")
+		  {
+		        alert(msg);
+		  }
 	});
 	
 	function fn_createProcess(){
 			var comSubmit = new ComSubmit();
 			comSubmit.addParam("conn_page", "{{result['conn_page']}}");
 			comSubmit.addParam("page", "{{result['page']}}");
-			comSubmit.setUrl("/admin/reg_edit");
+			comSubmit.setUrl("/admin/reg_write");
 			comSubmit.submit();
 	}
 	

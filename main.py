@@ -9,6 +9,8 @@ import json
 from bson import json_util
 from bson.json_util import dumps
 import comm.form_reg
+from admin.user_mng import UserCls
+
 
 
 app = Flask(__name__)
@@ -99,27 +101,52 @@ def reg_list():
 @app.route("/admin/reg_edit", methods=['POST'])
 def reg_edit():
     # session check
+    print("reg_edit called...")
     if 'user_id' in session:
+        print("formReg call")
         regcls = comm.form_reg.FormReg(request, session)
         data = regcls.getRegInfo()
 
-        print("result : ", data)
+        if data['id'] == '':
+            return render_template('/admin/comm/reg.html', result=data)
+        else:
+            print("reg_edit result : ", data)
+            json_data = json.loads(data['content'])
+            print("reg_edit json_data : ", json_data)
+            return render_template('/admin/comm/reg.html', result=data, json_data=json_data)
+    else:
+        print("reg_edit not loging called...")
+        return redirect('/admin')
+
+@app.route("/admin/reg_write", methods=['POST'])
+def reg_write():
+    # session check
+    print("reg_edit called...")
+    if 'user_id' in session:
+        print("formReg call")
+        regcls = comm.form_reg.FormReg(request, session)
+        data = regcls.getWriteInfo()
+
+        print("reg_edit result : ", data)
         json_data = json.loads(data['content'])
-        print("json_data : ", json_data)
+        print("reg_edit json_data : ", json_data)
         return render_template('/admin/comm/reg.html', result=data, json_data=json_data)
     else:
-        print("not loging called...")
+        print("reg_edit not loging called...")
         return redirect('/admin')
+
 
 @app.route("/admin/reg_save", methods=['POST'])
 def reg_save():
     if 'user_id' in session:
+        print("reg_save...")
         regcls = comm.form_reg.FormReg(request, session)
+        print("reg_save...1")
         sts = regcls.formRegister()
-
+        print("reg_save...2")
         mode = request.form['mode']
         conn_page = request.form['conn_page']
-
+        print("reg_save...3")
         print("reg_save : ", conn_page)
         if sts == True:
             if mode == 'upt':
@@ -137,6 +164,27 @@ def reg_save():
             msg = "저장하는데 에러가 발생하였습니다!"
             resp = make_response(redirect(url_for('reg_list', conn_page=conn_page, page=1, msg=msg)))
             return resp
+    else:
+        print("not login....")
+        return redirect('/admin')
+
+# User management
+@app.route("/admin/member/user_list", methods=['POST', 'GET'])
+def user_list():
+    # session check
+    if 'user_id' in session:
+
+        #if request.method == 'POST':
+        #    conn_page = request.form['conn_page']
+        #    page      = request.form['page']
+        #else:
+        #    conn_page = request.args.get('conn_page')
+        #    page = request.args.get('page')
+
+        user = UserCls(request, session)
+        data = user.getuserlist()
+
+        return render_template('/admin/member/user_list.html', result=data)
     else:
         return redirect('/admin')
 

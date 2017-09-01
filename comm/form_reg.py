@@ -1,6 +1,6 @@
 #-*- coding:utf-8 -*-
 # comm/form_reg.py
-from flask import request
+# from flask import request
 from datetime import datetime
 import lib.libdb
 import math
@@ -14,69 +14,78 @@ class FormReg:
         self.ses = ses
 
     def getRegInfo(self):
-        if self.req.method == 'POST':
-            conn_page = self.req.form['conn_page']
-            page = self.req.form['page']
-            id = self.req.form['id']
-        else:
-            conn_page = self.req.args.get('conn_page')
-            page = self.req.args.get('page')
-            id = self.req.args.get('id')
-
-        if conn_page is None:
-            conn_page = 'company_info'
-
-        conn = lib.libdb.DbClass("", "")
-        db = conn.getConn("testDB")
-        col = conn.getCollection("user")
-        data = col.find_one({'conn_page' : conn_page})
-
         result = {}
-        result['conn_page']  = conn_page
-        result['page'] = page
-        result['id'] = id
+        try:
+            print("getReginfo call")
+            if self.req.method == 'POST':
+                conn_page = self.req.form['conn_page']
+                page = self.req.form['page']
+                print("getReginfo call 11", conn_page, page)
 
-        if data is not None:
-            _id = data['_id']
-            col_name = data['col_name']
-            conn_url = data['conn_url']
-            conn_name = data['conn_name']
-            content = data['content']
-            conn.Close()
-            result['_id'] = _id
-            result['conn_name'] = conn_name     # return value
+                id = self.req.form['id']
 
-            if id is not None:
-                # 만일 ID가 있다면 formform.js에서 value를 받아서 등록 할 수 있도록 json을 수정해야 한다.
-                # 조회된 content 내용에서 json을 수정해서 value를 넣고 formform.js에서 value가 있는 값들에 대해서
-                # 출력한다.
-                data_object = json.loads(content)        # json decode
-                print("data_object : ", data_object)
-                dataList = []
-                idx = 0
-                db = conn.getConn(self.ses['dbname'])
-                col = conn.getCollection(col_name)
-                detail_content = col.find_one({'_id' : ObjectId(id)})
+                print("getReginfo call 2")
+            else:
+                conn_page = self.req.args.get('conn_page')
+                page = self.req.args.get('page')
+                id = self.req.args.get('id')
 
-                print("dbname : ", self.ses['dbname'], ", col : ", col_name, "_id", id, ", detail_content : ", detail_content)
-                idx = 0
-                for data in data_object:
-                    if data['type'] == 'text' or data['type'] == 'password':
-                        print("content : ", detail_content[data['name']])
-                        data_object[idx]['value'] = detail_content[data['name']]
-                    elif data['type'] == 'multi_text':
-                        dx = 0
-                        dlist = data['datalist']
-                        for lst in dlist:
-                            data_object[idx]['datalist'][dx]['value'] = detail_content[lst['name']]
-                            dx = dx + 1
+            if conn_page is None:
+                conn_page = 'company_info'
 
-                    idx = idx + 1
-                # json encode
-                content = json.dumps(data_object)
-                print("json encode data : ", content)
+            conn = lib.libdb.DbClass("", "")
+            db = conn.getConn("testDB")
+            col = conn.getCollection("user")
+            data = col.find_one({'conn_page' : conn_page})
 
-        result['content'] = content
+
+            result['conn_page']  = conn_page
+            result['page'] = page
+            result['id'] = id
+
+            if data is not None:
+                _id = data['_id']
+                col_name = data['col_name']
+                conn_url = data['conn_url']
+                conn_name = data['conn_name']
+                content = data['content']
+                conn.Close()
+                result['_id'] = _id
+                result['conn_name'] = conn_name     # return value
+
+                if id is not None:
+                    # 만일 ID가 있다면 formform.js에서 value를 받아서 등록 할 수 있도록 json을 수정해야 한다.
+                    # 조회된 content 내용에서 json을 수정해서 value를 넣고 formform.js에서 value가 있는 값들에 대해서
+                    # 출력한다.
+                    data_object = json.loads(content)        # json decode
+                    print("data_object : ", data_object)
+                    dataList = []
+                    idx = 0
+                    db = conn.getConn(self.ses['dbname'])
+                    col = conn.getCollection(col_name)
+                    detail_content = col.find_one({'_id' : ObjectId(id)})
+
+                    print("dbname : ", self.ses['dbname'], ", col : ", col_name, "_id", id, ", detail_content : ", detail_content)
+                    idx = 0
+                    for data in data_object:
+                        if data['type'] == 'text' or data['type'] == 'password':
+                            print("content : ", detail_content[data['name']])
+                            data_object[idx]['value'] = detail_content[data['name']]
+                        elif data['type'] == 'multi_text':
+                            dx = 0
+                            dlist = data['datalist']
+                            for lst in dlist:
+                                data_object[idx]['datalist'][dx]['value'] = detail_content[lst['name']]
+                                dx = dx + 1
+
+                        idx = idx + 1
+                    # json encode
+                    content = json.dumps(data_object)
+                    print("json encode data : ", content)
+
+                result['content'] = content
+        except Exception as e:
+             print("Result error : ", str(e))
 
         return result
 
@@ -147,10 +156,10 @@ class FormReg:
         conn = lib.libdb.DbClass("", "")
         db = conn.getConn("testDB")
         col = conn.getCollection("user")
-        data = col.find_one({'_id': ObjectId(id)})
+        data = col.find_one({'_id': ObjectId(_id)})
 
         if data is not None:
-            _id = data['_id']
+            _id = data['_id']       # form key
             col_name = data['col_name']
             conn_url = data['conn_url']
             conn_name = data['conn_name']
@@ -167,12 +176,12 @@ class FormReg:
                     for lstData in lst:
                         dataList[lstData['name']] = self.req.form[lstData['name']]
             dataList['lastModified'] = datetime.now()
-            dataList['createId'] = self.ses('user_id')
+            dataList['createId'] = self.ses['user_id']
 
 
             if mode == 'upt':
                 try:
-                    conn = lib.libdb.DbClass()
+                    conn = lib.libdb.DbClass("", "")
                     db = conn.getConn(self.ses['dbname'])
                     col = conn.getCollection(col_name)
                     #  mycollection.update({'_id': mongo_id}, {"$set": post}, upsert=False)
@@ -183,7 +192,7 @@ class FormReg:
                     return False
             elif mode == 'del':
                 try:
-                    conn = lib.libdb.DbClass()
+                    conn = lib.libdb.DbClass("", "")
                     db = conn.getConn(self.ses['dbname'])
                     col = conn.getCollection(col_name)
                     col.delete_many({'_id': ObjectId(id)})
@@ -193,8 +202,9 @@ class FormReg:
                     return False
             else:
                 try:
+                    print("dbname : ", self.ses['dbname'], ", col name : ", col_name)
                     dataList['createDt'] = datetime.now()
-                    conn = lib.libdb.DbClass()
+                    conn = lib.libdb.DbClass("", "")
                     db = conn.getConn(self.ses['dbname'])
                     col = conn.getCollection(col_name)
                     col.insert(dataList)
@@ -207,5 +217,43 @@ class FormReg:
             return False
 
 
+    def getWriteInfo(self):
+        result = {}
+        try:
+            print("getWriteInfo call")
+            if self.req.method == 'POST':
+                conn_page = self.req.form['conn_page']
+                page = self.req.form['page']
+                print("getReginfo call 11", conn_page, page)
+            else:
+                conn_page = self.req.args.get('conn_page')
+                page = self.req.args.get('page')
 
+            if conn_page is None:
+                conn_page = 'company_info'
+
+            conn = lib.libdb.DbClass("", "")
+            db = conn.getConn("testDB")
+            col = conn.getCollection("user")
+            data = col.find_one({'conn_page' : conn_page})
+
+
+            result['conn_page']  = conn_page
+            result['page'] = page
+
+            if data is not None:
+                _id = data['_id']
+                col_name = data['col_name']
+                conn_url = data['conn_url']
+                conn_name = data['conn_name']
+                content = data['content']
+                conn.Close()
+                result['_id'] = _id
+                result['conn_name'] = conn_name     # return value
+
+                result['content'] = content
+        except Exception as e:
+             print("Result error : ", str(e))
+
+        return result
 
