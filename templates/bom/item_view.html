@@ -1,0 +1,97 @@
+{% include "/include/bom_header.html" %}
+
+<div id="section">
+    <!-- Left Menu define  -->
+    {% include "/bom/menu_inc.html" %}
+    <!-- Left Menu end   -->
+
+	<div class="container_main">
+
+	<div style="padding-top:0px;" id="home" class="container">
+        <input type="hidden" id="pro_id" value="{{pro_id}}">
+ 		<div class="panel-group" id="accordion">
+    		<div class="panel panel-default">
+    			<div class="panel-heading">
+					<table border="0" width="100%">
+					<tr>
+						<td>
+      						<h4 class="panel-title">
+        						<a data-toggle="collapse" href="#eLevels">입출고 현황</a>
+      						</h4>
+						</td>
+                        <td>
+                            <input type="text" id="from"> ~ <input type="text" id="to">
+                        </td>
+                        <td align="right">
+                            <button type="submit" name="searchItemViewForm" id="searchItemViewForm" class="btn">Search</button>
+                        </td>
+					</tr>
+					</table>
+    			</div>
+
+    			<div id="eLevels" class="panel-collapse collapse in">
+					<div class="panel-body">
+                        <ul id="tree_for_tech_item">
+                            <ul id="view">
+                            <table class="bom_view">
+                                <thead>
+                                    <tr>
+                                        <th colspan="2" class="bom_th">입력</th>
+                                        <th colspan="2" class="bom_th">출력</th>
+                                        <th colspan="2" class="bom_th">조정</th>
+                                        <th class="bom_th">재고량</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                <tr><td>2017-09-01</td><td>500</td><td>2017-09-01</td><td>100</td><td>undefined</td><td>undefined</td></tr><tr><td>2017-09-02</td><td>150</td><td>2017-09-02</td><td>150</td><td>undefined</td><td>undefined</td></tr><tr><td>undefined</td><td>undefined</td><td>undefined</td><td>undefined</td><td>2017-09-11</td><td>-100</td></tr>
+
+                                </tbody>
+                            </table>
+                                </ul>
+						</ul>
+
+					</div>
+    			</div>
+    		</div>
+
+			<!--  div id="viewers" class="panel panel-default">
+    			<div class="panel-heading"  id="JSONheader">
+      				<h4 class="panel-title">
+        				<a data-toggle="collapse"  href="#JSONclient" >JSON Viewer : save button for updated json</a>
+      				</h4>
+    			</div>
+    			<div id="JSONclient" class="panel-collapse collapse in">
+					<div class="panel-body">
+						<h3> json editor with file : <span id="jsonSpan"> </span></h3>
+						<div id="jsoneditor"></div>
+	     			</div>
+    			</div>
+    		</div  -->
+
+  		</div>
+	</div>
+</div>
+
+<script language="javascript">
+    $(document).ready(function (e) {
+	    console.log("Time until DOMready: ", Date.now()-timerStart);
+{% if result is defined %}
+{%    set data = result %}
+{% else %}
+{$    set data = "" %}
+{% endif %}
+	    read_json_view_print({{data|safe}});	  // TODO: item.js
+    });
+
+    $( function() {
+        $( "#from" ).datepicker({
+            dateFormat: 'yy-mm-dd'
+        });
+        $( "#to" ).datepicker({
+            dateFormat: 'yy-mm-dd'
+        });
+    } );
+
+
+</script>
+{% include "/include/bottom.html" %}

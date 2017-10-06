@@ -1,0 +1,35 @@
+table {
+    border-collapse: collapse;
+    font-size: 14px;
+    width: 100%;
+}
+
+.table_scan {
+    border:2px solid #d8d8d8;
+}
+.table_scan th{
+    background: #f9f4ee;
+    height: 40px;
+    border-bottom:1px solid #e0c5a7;
+}
+.table_scan td{
+    background: #fff;
+    height: 40px;
+    border-bottom:1px solid #d8d8d8;
+    padding-left: 10px;
+}
+
+.table_alaram {
+    border:2px solid #d8d8d8;
+}
+.table_alaram th{
+    background: #fbfaeb;
+    height: 40px;
+    border-bottom:1px solid #ebe89b;
+}
+.table_alaram td{
+    background: #fff;
+    height: 40px;
+    border-bottom:1px solid #d8d8d8;
+    padding-left: 10px;
+}

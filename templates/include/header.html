@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>MES main</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!--  link rel="stylesheet" href="/static/css/pure-min.css"  -->
+  <!-- link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/pure-min.css"  -->
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/static/css/common.css" />
+  <link rel="stylesheet" href="/static/css/layout.css" />
+  <!-- jQuery library -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://code.jquery.com/jquery.min.js"></script>
+  <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+  <script src="/static/js/common.js"></script>
+
+</head>
+<body>
+        <div id="wrap">
+            <div id="header">
+                <div class="head">
+                    <h1 class="logo fl_left"><a href="/">Menufacturing Execution System</a></h1>
+                    <div class="gnb fl_left">
+                        <ul>
+                    <li><a href="/bom/item_mng">BOM Management</a></li>
+                    <li><a href="/work/work_list">Worker Management</a></li>
+                    <li><a href="/process/process_select">Process Management</a></li>
+                            <li><a href="/admin/reg_list?conn_page=company_info">Company Management</a></li>
+                        </ul>
+                    </div>
+                    <div class="login fl_right">
+                    	<img src="/static/image/icon_member.png" style="padding-right:10px">
+                    	{% if session["admin_chk"] is defined  %}
+                    		 [My Page] [<a href="/sign_out">Sign-Out</a>]
+                    	{% else %}
+                    		 [<a href="/member/member_register">Register</a>] [<a href="/sign_in">Sign-In</a>]
+                    	{% endif %}
+                    	[<a href="/admin">관리자 모드</a>]
+                    </div>
+                </div>
+            </div>
+

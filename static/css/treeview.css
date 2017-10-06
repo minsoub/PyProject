@@ -1,0 +1,212 @@
+@import url('http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300');
+@import url('http://fonts.googleapis.com/css?family=Handlee');
+
+.treeview {
+  float: left;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+}
+.treeview:hover input ~ label:before,
+.treeview.hover input ~ label:before {
+  opacity: 1.0;
+  -webkit-transition-duration: 0.5s;
+  -moz-transition-duration: 0.5s;
+  -ms-transition-duration: 0.5s;
+  -o-transition-duration: 0.5s;
+  transition-duration: 0.5s;
+}
+.treeview ul {
+  -webkit-transition-duration: 1s;
+  -moz-transition-duration: 1s;
+  -ms-transition-duration: 1s;
+  -o-transition-duration: 1s;
+  transition-duration: 1s;
+  list-style: none;
+  padding-left: 1em;
+}
+.treeview ul li span {
+  -webkit-transition-property: color;
+  -moz-transition-property: color;
+  -ms-transition-property: color;
+  -o-transition-property: color;
+  transition-property: color;
+  -webkit-transition-duration: 1s;
+  -moz-transition-duration: 1s;
+  -ms-transition-duration: 1s;
+  -o-transition-duration: 1s;
+  transition-duration: 1s;
+}
+.treeview ul li span:hover {
+  /*color: rgba(255, 255, 255, 0.9);*/
+  -webkit-transition-duration: 0.3s;
+  -moz-transition-duration: 0.3s;
+  -ms-transition-duration: 0.3s;
+  -o-transition-duration: 0.3s;
+  transition-duration: 0.3s;
+}
+.treeview input {
+  display: none;
+}
+.treeview input:checked ~ ul {
+  display: none;
+}
+.treeview input ~ label {
+  cursor: pointer;
+}
+.treeview input ~ label:before {
+  content: '';
+  width: 0;
+  height: 0;
+  position: absolute;
+  margin-left: -1em;
+  margin-top: 0.4em;
+  border-width: 4px;
+  border-style: solid;
+  border-top-color: transparent;
+  border-right-color: blue;
+  border-bottom-color: blue;
+  border-left-color: transparent;
+  opacity: 0.0;
+  -webkit-transition-property: opacity;
+  -moz-transition-property: opacity;
+  -ms-transition-property: opacity;
+  -o-transition-property: opacity;
+  transition-property: opacity;
+  -webkit-transition-duration: 1s;
+  -moz-transition-duration: 1s;
+  -ms-transition-duration: 1s;
+  -o-transition-duration: 1s;
+  transition-duration: 1s;
+}
+.treeview input:checked ~ label:before {
+  margin-left: -0.8em;
+  border-width: 5px;
+  border-top-color: transparent;
+  border-right-color: transparent;
+  border-bottom-color: transparent;
+  border-left-color: purple;
+}
+
+
+div.mymargin, span.mymargin{
+	margin-top:2px;
+/*	margin-bottom:2px;*/
+}
+span.ts1{
+font-size: 12px;
+background-color: #f8f8ff;
+background-size: 20px 20px;
+background-repeat:no-repeat;
+background-position:2px;
+padding: 2px;
+border-radius: 5px 5px 5px;
+border: 1px solid blue;
+text-align: left;
+margin : 0.1em 0 0.1em 8em;
+height: 40px;
+display: block;
+overflow-y: auto ;
+overflow-x: hidden ;
+}
+span.tlName{
+   font-family:arial; 
+   font-size: 1.5em; 
+}
+span.mylabel{
+/*color:red; */
+font-size: 12px;
+text-align: left;
+padding-left: 2em;
+position:relative;	
+}
+span.year{
+/*color:red; */
+font-size: 12px;
+width : 6em;
+background-color: #f8f8ff;
+background-size: 20px 20px;
+background-repeat:no-repeat;
+background-position:2px;
+padding: 2px;
+border-radius: 5px 5px 5px;
+border: 1px solid blue;
+text-align: center;
+margin : 0.1em 0 0.1em 0;
+/*padding-left: 25px;*/
+position:relative;	
+}
+div.capacity{
+    width:100%;
+    text-align:center;
+}
+div.left {
+    float:left;
+    width:20%;
+ //   height: 20px;
+   // background: #ff0000;
+}
+
+div.center {
+    display: inline-block;
+    margin:0 auto;
+    width:40%;
+    height: 20px;
+    background: #00ff00;
+}
+
+
+div.right {
+    float:right;
+    width:20%;
+    height: 20px;
+    background: #0000ff;
+}
+
+span.select_ef{
+cursor: pointer; 
+font-size: 14px;
+display: inline-block;
+width:14em;
+background-color: #f8f8ff;
+background-size: 20px 20px;
+background-repeat:no-repeat;
+background-position:2px;
+padding: 2px;
+border-radius: 5px 5px 5px;
+border: 1px solid blue;
+text-align: left;
+margin-left : 1em;
+padding-left: 0.5em;
+position:relative;		
+}
+li.tech_level{
+	
+}
+li.tech{
+	
+}
+span.tl_id{
+	font-size: 18px;
+	display: inline-block;
+width:5em;text-align: center;
+	font-weight: bold;
+	background-color:lightgray;
+}
+span.t_id{
+	font-size: 16px;
+	color:blue;display: inline-block;
+width:4em;text-align: center;
+	font-weight: bold;
+	background-color:lightgray;
+}
+span.a_id{
+	font-size: 14px;
+	color:green;display: inline-block;
+width:3em;text-align: center;
+	font-weight: bold;
+	
+	background-color:lightgray;
+}

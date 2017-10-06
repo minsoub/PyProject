@@ -1,0 +1,267 @@
+{
+	"general":{
+		"drate":0.055,
+		"fyear":2015,
+		"lyear":2050,
+		"excelFileName":"trkhg.xlsx",
+		"sheetName":"timeSeries"
+	},
+	"energyLevels":[
+		{	"name":"car energy",
+			"energyForms":[
+				{	"name":"oil",	"hasLoadRegion":true,	"eq":true},
+				{	"name":"bio ethanol",	"hasLoadRegion":false,	"eq":false},
+				{	"name":"electriciy",	"hasLoadRegion":false,	"eq":false}
+			]
+		},
+		{	"name":"blended energy",
+			"energyForms":[
+				{	"name":"oil+bio ethanol",	"hasLoadRegion":false,	"eq":false}
+			]
+		},
+		{	"name":"car demand",
+			"isDemand":true,
+			"energyForms":[
+				{	"name":"kmYear","hasLoadRegion":false,"eq":false,"demand":{	"excelRange":"F3:AO3"}}
+			]
+		}
+	],
+	
+	"techLevels":[
+		{	"name":"energy technology",
+			"techs":[
+				{	"name":"oil",
+					"capacity":{"inv_cost":{},"fixed_cost":{},"historic":{"year":{},"cap":{}}	},
+					"activities":[
+						{	"var_cost":{"excelRange":"F6:AO6"},
+							"inputs":[	],
+							"outputs":[
+								{"is_main":true,"f_id":1, "value":1}
+							]
+						}
+					]
+				},
+				{	"name":"bio ethanol",
+					"capacity":{"inv_cost":{},"fixed_cost":{},"historic":{"year":{},"cap":{}}	},
+					"activities":[
+						{	"var_cost":{"excelRange":"F8:AO8"	},
+							"inputs":[	],
+							"outputs":[
+								{"is_main":true,"f_id":2,"value":1}
+							]
+						}
+					]
+				},
+				{
+					"name":"electricity",
+					"capacity":{"inv_cost":{},"fixed_cost":{},"historic":{"year":{},"cap":{}}	},
+					"activities":[
+						{	"var_cost":{"excelRange":"F10:AO10"	},
+							"inputs":[	],
+							"outputs":[
+								{	"is_main":true,"f_id":3, "value":{"excelRange":"A1"}}
+							]
+						}
+					]
+				}
+			]
+		},
+		{	"name":"blended tech",
+			"techs":[
+				{	"name":"oil bio ethanol",
+					"capacity":{"inv_cost":{},"fixed_cost":{},"historic":{"year":{},"cap":{}	}},
+					"activities":[
+						{	"var_cost":{},
+							"inputs":[
+								{"is_main":true,"f_id":1},
+								{"f_id":2,	"value":{"excelRange":"F12:AO12"}}
+							],
+							"outputs":[
+								{"is_main":true,"f_id":4,	"comment":"blended energy(2)/oil_bio_ethanol(4)","value":{"excelRange":"F13:AO13"}}
+							]
+						}
+					]
+				}
+			]
+		},
+		{
+			"name":"demand tech",
+			"techs":[
+				{	"name":"ICE", 
+					"capacity":{"lifetime":10,"inv_cost":{"excelRange":"F15:AO15"},"fixed_cost":{},"historic":{"year":{"excelRange":"F16:N16"},"cap":{"excelRange":"F17:N17"}}},
+					"activities":[
+						{	"var_cost":{},
+							"inputs":[
+								{"is_main":true,"f_id":4}
+							],
+							"outputs":[
+								{	"is_main":true,"f_id":5,"value":{"excelRange":"F19:AO19"},"value_comment":{	"excelRange":"F19:AO19"}}
+							]
+						}
+					]
+				},
+				{
+					"name":"PHEV",
+					"capacity":{"lifetime":10,"inv_cost":{"excelRange":"F21:AO21"},"fixed_cost":{"excelRange":"F10:AO10"	},"historic":{"year":{"excelRange":"F22:N22"},"cap":{"excelRange":"F23:N23"}}},
+					"activities":[
+						{	"name":"city",	"var_cost":{"excelRange":"F10:AO10"	},
+							"inputs":[
+								{	"is_main":true,"f_id":3}
+							],
+							"outputs":[
+								{	"is_main":true,"f_id":5,"value":{"excelRange":"F25:AO25"}}
+							]
+						},
+						{
+							"name":"highway",	"var_cost":{},
+							"inputs":[
+								{	"is_main":true,"f_id":4},
+								{"f_id":3,	"value":{"excelRange":"f27"}}
+							],
+							"outputs":[
+								{	"is_main":true,"f_id":5,"value":{"excelRange":"F28:AO28"}}
+							]
+						}
+					]
+				},
+				{
+					"name":"EV",
+					"capacity":{"lifetime":10,"inv_cost":{"excelRange":"F29:AO29"},"fixed_cost":{},"historic":{"year":{},"cap":{}}	},
+					"activities":[
+						{	"var_cost":{},
+							"inputs":[
+								{	"is_main":true,"f_id":3}
+							],
+							"outputs":[
+								{	"is_main":true,"f_id":5,"value":{"excelRange":"F31:AO31"}}
+							]
+						}
+					]
+				}
+			]
+		}
+	],
+	"variables":[
+		{"name":"dummy1", "teXeq":"z_1", "is_ts":true},
+		{"name":"dummy2", "teXeq":"z_\\color{red}{2}", "is_ts":false},
+		{"name":"car product", "teXeq":"v_2", "is_ts":true},
+		{"name":"dummy3", "teXeq":"v", "is_ts":false}	
+	],
+	"constraints":{
+		"type1":[
+			{"name":"middle/elec MS", "is_act":true,  "is_input":true,  "addToLP":true, "eqType":"ge", "excelMatrixRange":"F46:AO48",
+				"techs":[{"name":"middle(5)"}, {"name":"elec car(7)"}]
+			},
+			{"name":"cummlative CO2", "is_act":true,  "is_input":true, "addToLP":false, "eqType":"ge", "excelMatrixRange":"F32:AO35",
+				"techs":[{"name":"middle(5)"}, {"name":"plug-in(6)/city(1)"},  {"name":"variable/dummy1(1)"}]
+			}
+		],
+		"type2":[
+			{"name":"cummlative CO2", "is_act":true,  "is_input":false, "addToLP":false, "eqType":"ge", "excelMatrixRange":"F32:AO35",
+				"techs":[{"name":"middle(5)"}, {"name":"plug-in(6)/city(1)"},  {"name":"variable/dummy1(1)"}]
+			}
+		],
+		"type3": [
+			{
+				"name": "new production", "is_act": true,  "is_input":true, "addToLP": false, "eqType": "le", "excelMatrixRange": "f58:ao63",
+				"techs": [{ "name": "middle(5)", "S_is": [{"S_i":-2,"init":5000},{"S_i": -1,"init":6008},{"S_i": 0}]	},
+					{ "name": "variable/dummy1(1)", "S_is": [{"S_i":-1,"init":7000},{"S_i":1}]	}
+				]
+			},
+			{
+				"name": "new production", "is_act": true, "is_input":false, "addToLP": false, "eqType": "le", "excelMatrixRange": "f51:ao55",
+				"techs": [{ "name": "middle(5)", "S_is": [{"S_i":0},{"S_i":1}]	},
+					{ "name": "variable/dummy1(1)", "S_is": [{"S_i":0},{"S_i":1}]	}
+				]
+			},
+			{
+				"name": "new production", "is_act": false, "addToLP": false, "eqType": "le", "excelMatrixRange": "f51:ao55",
+				"techs": [{ "name": "middle(5)", "S_is": [{"S_i":-1,"init":6008},{"S_i":0}]	},
+					{ "name": "variable/dummy1(1)", "S_is": [{"S_i":-1,"init":9000},{"S_i":1}]	}
+				]
+			}
+		],
+		"short_type1":[
+			{"name":"activity/input",
+				"techs":[
+				{"name":"middle(5)", 
+						"lower":{"value":1000, "addToLP":false}, 
+						"upper":{"value":100000, "addToLP":false},
+						"equal":{"years":{"excelRange":"f40:h40"},"RHS":{"excelRange":"f41:h41"}, "addToLP":false} }, 
+				{"name":"plug-in(6)/city(1)", 
+						"lower":{"excelRange":"f5", "addToLP":false}, 
+						"upper":{"excelRange":"e1", "addToLP":false},
+						"equal":{"years":{"excelRange":"f40:h40"},"RHS":{"excelRange":"f41:h41"}, "addToLP":false} }, 
+				{"name":"elec car(7)", "lower":{"excelRange":"f1", "addToLP":false}, "upper":{"excelRange":"e1", "addToLP":false},
+						"equal":{"years":{"excelRange":"f40:h40"},"RHS":{"excelRange":"f41:h41"}, "addToLP":false} }, 
+				{"name":"variable/dummy1(1)", "lower":{"excelRange":"f1", "addToLP":false}, "upper":{"excelRange":"e1", "addToLP":false},
+						"equal":{"years":{"excelRange":"f40:h40"},"RHS":{"excelRange":"f41:h41"}, "addToLP":false} }, 
+				{"name":"variable/dummy2(2)", "lower":{"excelRange":"f1", "addToLP":false}, "upper":{"excelRange":"e1", "addToLP":false},
+						"equal":{"RHS":{"value":0}, "addToLP":false} }						
+				]
+			},
+			{"name":"activity/output",
+				"techs":[
+				{"name":"middle(5)", 
+						"lower":{"value":1000, "addToLP":false}, 
+						"upper":{"value":100000, "addToLP":false},
+						"equal":{"years":{"excelRange":"f40:h40"},"RHS":{"excelRange":"f41:h41"}, "addToLP":false} }, 
+				{"name":"bio ethanol(2)", 
+						"lower":{"excelRange":"g1", "addToLP":false}, 
+						"upper":{"excelRange":"f5", "addToLP":false},
+						"equal":{"years":{"excelRange":"f40:h40"},"RHS":{"excelRange":"f41:h41"}, "addToLP":false} }, 
+				{"name":"plug-in(6)/city(1)", 
+						"lower":{"excelRange":"f1", "addToLP":false}, "upper":{"excelRange":"f5", "addToLP":false},
+						"equal":{"years":{"excelRange":"f43:h43"},"RHS":{"excelRange":"f44:h44"}, "addToLP":false} }, 
+				{"name":"elec car(7)", "lower":{"excelRange":"f1", "addToLP":false}, "upper":{"excelRange":"f5", "addToLP":false},
+						"equal":{"years":{"excelRange":"f43:h43"},"RHS":{"excelRange":"f44:h44"}, "addToLP":false} }
+				]
+			},
+			{"name":"capacity",
+				"techs":[
+				{"name":"middle(5)", 
+						"lower":{"value":1000, "addToLP":false}, 
+						"upper":{"value":100000, "addToLP":false},
+						"equal":{"years":{"excelRange":"f40:h40"},"RHS":{"excelRange":"f41:h41"}, "addToLP":false} }, 
+				{"name":"electricity(3)", "lower":{"excelRange":"h1", "addToLP":false}, "upper":{"excelRange":"f5", "addToLP":false},
+						"equal":{"years":{"excelRange":"f40:h40"},"RHS":{"excelRange":"f41:h41"}, "addToLP":false} }, 
+				{"name":"plug-in(6)", "lower":{"excelRange":"f1", "addToLP":false}, "upper":{"excelRange":"f5", "addToLP":false},
+						"equal":{"years":{"excelRange":"f43:h43"},"RHS":{"excelRange":"f44:h44"}, "addToLP":false} }, 
+				{"name":"elec car(7)", "lower":{"excelRange":"f1", "addToLP":false}, "upper":{"excelRange":"f5", "addToLP":false},
+						"equal":{"years":{"excelRange":"f43:h43"},"RHS":{"excelRange":"f44:h44"}, "addToLP":false} }
+				]
+			}
+		]
+	},
+	
+	"solutions":[
+		{"name":"dummy", "is_act":true,  "is_input":false,  "addToExcel":true, "excelSolutionAddress":"A2",
+			"techs":[{"name":"variable/dummy1(1)"}, {"name":"variable/dummy2(2)"}]
+		},
+		{"name":"energy consumption", "is_act":true,  "is_input":true,  "addToExcel":true, "excelSolutionAddress":"A5",
+			"techs":[{"name":"oil(1)"}, {"name":"bio ethanol(2)"}, {"name":"electricity(3)"}]
+		},
+		{"name":"energy consumption", "is_act":true,  "is_input":false,  "addToExcel":true, "excelSolutionAddress":"A10",
+			"techs":[{"name":"oil(1)"}, {"name":"bio ethanol(2)"}, {"name":"electricity(3)"}]
+		},
+		{"name":"car km", "is_act":true,  "is_input":true,  "addToExcel":true, "excelSolutionAddress":"A15",
+			"techs":[{"name":"middle(5)"}, {"name":"plug-in(6)/city(1)"}, {"name":"plug-in(6)/highway(2)"},  {"name":"elec car(7)"}]
+		},
+		{"name":"car km", "is_act":true,  "is_input":false,  "addToExcel":true, "excelSolutionAddress":"A20",
+			"techs":[{"name":"middle(5)"}, {"name":"plug-in(6)/city(1)"}, {"name":"plug-in(6)/highway(2)"},  {"name":"elec car(7)"}]
+		},
+		{"name":"car new capacity", "is_act":false,  "is_allCap":false,  "addToExcel":true, "excelSolutionAddress":"A25",
+			"techs":[{"name":"middle(5)"}, {"name":"plug-in(6)"},  {"name":"elec car(7)"}]
+		},
+		{"name":"car all capacity", "is_act":false,  "is_allCap":true,  "addToExcel":true, "excelSolutionAddress":"A30",
+			"techs":[{"name":"middle(5)"}, {"name":"plug-in(6)"},  {"name":"elec car(7)"}]
+		}
+	],	
+	
+	"RESdraw":{
+		"energyLevel":{"fontSize":14,"xInterval":250},
+		"energyForm":{"fontSize":12,"xInterval":15, "yInterval":15},
+		"technology":{"fontSize":12,"width":100, "height":30, "yInterval":30},
+		"activity":{"fontSize":12,"topMargin":30, "bottomMargin":15, "lrMargin":15, "yInterval":20}
+	}
+}

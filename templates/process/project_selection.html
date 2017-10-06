@@ -1,0 +1,48 @@
+{% include "/admin/header/admin_header.html" %}
+
+<div id="section">
+  <!-- Left Menu define  -->
+  {% include "/process/process_menu_inc.html" %}
+  <!-- Left Menu end   -->
+            	  
+  <div class="container_main">
+      <h3>프로젝트 선택</h3>
+      <div class="search_box">
+          <form  method="post" id="searchForm" name="searchForm">
+          <fieldset>
+             <select id="pro_id" name="pro_id" class="sel" style="margin-right:25px;margin-left:10px">
+               	<option value="">프로젝트를 선택하세요!!!</option>
+				{% for doc in data %}
+					<option value="{{doc['_id']}}">{{doc['project_name']}}</option>
+				{% endfor %}
+             </select>
+             <button type="button" id="btn_select" class="pure-button">선택하기</button>
+          </fieldset>
+          </form>
+      </div>
+  </div>
+</div>
+            
+<form id="commonForm" name="commonForm"></form>     
+     
+<script type="text/javascript">
+	$(document).ready(function(){
+			$("#btn_select").on("click", function(e){ // Create button
+				e.preventDefault();
+				fn_selectProcess();
+			});
+	});
+	
+	function fn_selectProcess(){
+		if ($("#pro_id").val() == "") {
+			alert("프로젝트를 선택하세요!!!");
+			return;
+		}else {
+			var comSubmit = new ComSubmit("searchForm");
+			//comSubmit.addParam("pro_id", $("#pro_id").val());
+			comSubmit.setUrl("/process/process_select");
+			comSubmit.submit();
+		}
+	}
+</script>
+{% include ['/include/bottom.html'] %}

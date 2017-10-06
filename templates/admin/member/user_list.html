@@ -1,8 +1,28 @@
 {% include "/admin/header/admin_header.html" %}
 
-{% if page is not defined %}
-{%    set page = 1 %}
-{% endif  %}
+{%  set info = result     %}
+{%  set page = 1          %}
+
+{%  if info['page'] is not defined   %}
+{%       set page = 1    %}
+{%  else    %}
+{%       set page = info['page']    %}
+{%  endif    %}
+{%  if info['search_kind'] is not defined     %}
+{%       set search_kind = ''    %}
+{%  else    %}
+{%       set search_kind = info['search_kind']    %}
+{%  endif    %}
+{%  if info['word'] is not defined    %}
+{%       set word = ''    %}
+{%  else    %}
+{%       set word = info['word']    %}
+{%  endif  %}
+
+{% set msg = '' %}
+{% if result['msg'] is defined %}
+{%    set msg = result['msg']   %}
+{% endif %}
 
             <div id="section"> 
             	  <!-- Left Menu define  -->
@@ -12,16 +32,16 @@
                 <div class="container_main">
                     <h3>업체 관리자 정보 관리</h3>
                     <div class="search_box">
-                        <form action="member_list.php" method="post" id="searchForm" name="searchForm">
+                        <form  method="post" id="searchForm" name="searchForm">
                             <fieldset>
                                 <legend>검색</legend>
                                 분류 
                                 <select id="search_kind" name="search_kind" class="sel" style="margin-right:25px;margin-left:10px">
                                 	<option value="">분류를 선택하세요!!!</option>
-                                	<option value="name" <?if($search_kind == "name"){?>selected<?}?>>성명</option>
-                                	<option value="dbname"   <?if($search_kind == "dbname"){?>selected<?}?>>데이터베이스명</option>
+                                	<option value="name" {% if search_kind == 'name' %}selected{% endif %}>성명</option>
+                                	<option value="dbname"   {% if search_kind == 'dbname' %}selected{% endif %}>데이터베이스명</option>
                                 </select>
-                                &nbsp;<input type="text" id="word" name="word" value="<?=$word?>" class="input_box">
+                                &nbsp;<input type="text" id="word" name="word" value="{{word}}" class="input_box">
                                 <button type="button" id="search" class="btn_search">검색</button>
                             </fieldset>                             
                         </form>
@@ -40,38 +60,31 @@
 		                            </tr>
 		                        </thead>
 		                        <tbody>
-		                        <?
-		                           foreach($cursor as $document)
-		                           {
-		                           	   $doc = (array)$document;
-		                        ?>
+                              {% for doc in info['data']  %}
 		                            <tr>
-		                                <td><?=$doc['name']?></td>
-		                                <td><a href="javascript:fn_goView('<?=$doc['userid']?>');"><?=$doc['userid']?></a></td>
-		                                <td><?=$doc['tel1']?>-<?=$doc['tel2']?>-<?=$doc['tel3']?></td>
-		                                <td><?=$doc['dbname']?></td>
-		                                <td><?=getMongoDate($doc['creatDt'])?></td>
-		                                <td><?=getMongoDate($doc['lastModified'])?></td>
-		                                <td><?if($doc['admin_chk']=="1"){?>일반관리자<?}else if($doc['admin_chk']=="2"){?>통합관리자<?}?></td>
-		                            </tr>	
-		                        <?
-		                          }
-		                        ?>
+		                                <td>{{doc['name']}}</td>
+		                                <td><a href="javascript:fn_goView('{{doc['userid']}}');">{{doc['userid']}}</a></td>
+		                                <td>{{doc['tel1']}}-{{doc['tel2']}}-{{doc['tel3']}}</td>
+		                                <td>{{doc['dbname']}}</td>
+		                                <td>{{doc['creatDt']}}</td>
+		                                <td>{{doc['lastModified']}}</td>
+		                                <td>{% if doc['admin_chk'] == '1' %}일반관리자{% elif doc['admin_chk'] == '2' %}통합관리자{% endif %}</td>
+		                            </tr>
+							 {% endfor %}
                             </tbody>
                       </table>
                       
                     <div class="pageNate">
-                        <a class="start" href=""></a>
-                        <a class="prev" href=""></a>
-                        <a class="selected" href="">1</a>
-                        <a href="">2</a>
-                        <a href="">3</a>
-                        <a href="">4</a>
-                        <a href="">5</a>
-                        <a class="next" href=""></a>
-                        <a class="end" href=""></a>
+                        <a class="start" id="start" href=""></a>
+                        <!--  a class="prev" href=""></a  -->
+                    {% for i in range(1, result['page_num'] +1) %}
+                        <a class="{%if i == result['page']%}selected{%endif%}" href="javascript:fn_goPage('{{i}}');">{{i}}</a>
+                    {% endfor %}
+                        <!--  a class="next" href=""></a  -->
+                        <a class="end" id="end" href=""></a>
                     </div>
-        <button type="button" id="list"   class="btn_blue fl_right">List</button>   
+
+            <button type="button" id="list"   class="btn_blue fl_right">List</button>
 		    <button type="button" id="create" class="btn_blue fl_right" style="margin-right:10px">Create</button>           
                 </div>
             </div>
@@ -93,13 +106,17 @@
 			$("#list").on("click", function(e){ // List button 
 				e.preventDefault();
 				fn_listProcess();
-			});			
+			});
+		    if ("{{msg}}" != "None" && "{{msg}}" != "") {
+		        alert("{{msg}}")
+		    }
 										
 	});
 	
 	function fn_createProcess(){
 			var comSubmit = new ComSubmit();
-			comSubmit.setUrl("user_register.php");
+			comSubmit.addParam("page", "{{page}}");
+			comSubmit.setUrl("/admin/member/user_reg");
 			comSubmit.submit();
 	}
 	
@@ -107,7 +124,10 @@
 	{
 		  var comSubmit = new ComSubmit();
 		  comSubmit.addParam("id", _id);
-		  comSubmit.setUrl("user_register.php");
+		  comSubmit.addParam("page", "{{page}}");
+		  comSubmit.addParam("search_kind", {{search_kind}});
+		  comSubmit.addParam("word", {{word}});
+		  comSubmit.setUrl("/admin/member/user_detail");
 		  comSubmit.submit();
 		
 	}
@@ -124,13 +144,31 @@
 		  	  $("#word").focus();
 		  	  return;
 		  }
-		  
-		  searchForm.submit();
+		  var comSubmit = new ComSubmit();
+		  comSubmit.addParam("page", "{{page}}");
+		  comSubmit.addParam("search_kind", $("#search_kind").val());
+		  comSubmit.addParam("word", $("#word").val());
+		  comSubmit.setUrl("/admin/member/user_list");
+		  comSubmit.submit();
 	}
 	
 	function fn_listProcess()
 	{
-		  location.href="user_list.php";
+	      var comSubmit = new ComSubmit();
+	      comSubmit.addParam("page", 1);
+	      comSubmit.addParam("search_kind", "");
+	      comSubmit.addParam("word","");
+	      comSubmit.setUrl("/admin/member/user_list");
+	      comSubmit.submit();
+	}
+	function fn_goPage(page)
+	{
+	      var comSubmit = new ComSubmit();
+	      comSubmit.addParam("page", page);
+	      comSubmit.addParam("search_kind", $("#search_kind").val());
+	      comSubmit.addParam("word", $("#word").val());
+	      comSubmit.setUrl("/admin/member/user_list");
+	      comSubmit.submit();
 	}
 </script>
-{% include ['bottom.html'] %}
+{% include ['/include/bottom.html'] %}

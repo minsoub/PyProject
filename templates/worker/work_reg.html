@@ -1,0 +1,134 @@
+{% include "/include/bom_header.html" %}
+
+<div id="section">
+    <!-- Left Menu define  -->
+    {% include "/worker/work_menu_inc.html" %}
+    <!-- Left Menu end   -->
+
+	<div class="container_main">
+
+	<div style="padding-top:0px;" id="home" class="container">
+        <input type="hidden" id="pro_id" value="{{pro_id}}">
+ 		<div class="panel-group" id="accordion">
+    		<div class="panel panel-default">
+    			<div class="panel-heading">
+					<table border="0" width="100%">
+					<tr>
+						<td width="200">
+      						<h4 class="panel-title">
+        						<a data-toggle="collapse" href="#eLevels">작업자 근태현황</a>
+      						</h4>
+						</td>
+                        <td width="100">
+                            <input type="text" id="dt" style="width:80px;">
+                        </td>
+                        <td align="right">
+                            <!-- button type="submit" name="searchWorkForm" id="searchWorkForm" class="btn">Search</button  -->
+                        </td>
+					</tr>
+					</table>
+    			</div>
+
+    			<div id="eLevels" class="panel-collapse collapse in">
+					<div class="panel-body">
+                        <ul id="tree_for_tech_item">
+                            <table border="0">
+                                <tr>
+                                    <td>
+                                        <!--  작업자 리스트  -->
+                                        <ui id="table_view_ui">
+
+                                        </ui>
+                                    </td>
+                                    <td>
+                                        <!-- 작업자 근태 현황  -->
+                                        <ui id="table_worker_list_ui">
+
+                                        </ui>
+                                    </td>
+                                </tr>
+                            </table>
+						</ul>
+					</div>
+    			</div>
+            </div>
+
+            <div class="panel panel-default">
+    			<div class="panel-heading">
+                    <ul id="work_register_form_head">
+                        <li id=""work_register_form_head_li>
+					        <table border="0" width="100%">
+					        <tr>
+						        <td>
+      						        <h4 class="panel-title">
+        						        <a data-toggle="collapse" href="#workLevels">작업자 근태현황 <span id="worker_title"></span></a>
+      						        </h4>
+						        </td>
+                                <td>&nbsp;</td>
+                                <td align="right">
+                                    <button type="submit" name="saveWorkerList"   id="saveWorkerList"   class="btn">저장</button>
+                                    <!--  button type="submit" name="deleteWork" id="deleteWork" class="btn">삭제</button  -->
+                                </td>
+					        </tr>
+					        </table>
+                        </li>
+                    </ul>
+    			</div>
+
+    			<div id="workLevels" class="panel-collapse collapse in">
+					<div class="panel-body">
+                        <ul id="work_register_form">
+                            <table class="bom_view">
+                                <tr class="tr_head" id="tr_head">
+                                    <td class="work_td1">일자</td>
+                                    <td class="work_td1">요일</td>
+                                    <td class="work_td1">출근</td>
+                                    <td class="work_td1">퇴근</td>
+                                    <td class="work_td1">근무시간</td>
+                                    <td class="work_td1">정상</td>
+                                    <td class="work_td1">연장</td>
+                                    <td class="work_td1">야간</td>
+                                    <td class="work_td1">비고</td>
+                                </tr>
+                            </table>
+						</ul>
+					</div>
+    			</div>
+
+    		</div>
+        </div>
+
+
+  		</div>
+	</div>
+</div>
+
+<script language="javascript">
+    $(document).ready(function (e) {
+	    console.log("Time until DOMready: ", Date.now()-timerStart);
+{% if worker_list is defined %}
+{%    set data = worker_list %}
+{% else %}
+{$    set data = "" %}
+{% endif %}
+
+{% if html_form is defined %}
+{%    set html_data = html_form %}
+{% else %}
+{$    set html_data = "" %}
+{% endif %}
+
+        // read_json_html_data({{html_data|safe}});  // TODO: json html data
+	    read_json_worker_list_print({{data|safe}});	  // TODO: work.js
+    });
+
+    $( function() {
+        $( "#dt" ).datepicker({
+            dateFormat: 'yy-mm'
+        });
+        $( "#dt" ).datepicker( "setDate", new Date());
+    } );
+
+
+</script>
+{% include "/include/bottom.html" %}

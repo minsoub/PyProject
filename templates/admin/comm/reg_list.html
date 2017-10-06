@@ -5,61 +5,68 @@
 {% endif  %}
 {% if conn_page is not defined %}
 {%    set conn_page = 'company_info'  %}
-{%   endif %}
+{% endif %}
 {% set info = result['result'] %}
 
-            <div id="section"> 
-            	  <!-- Left Menu define  -->
-            	  {% include "/admin/menu/menu_inc.html" %}
-            	  <!-- Left Menu end   -->
+<div id="section">
+  <!-- Left Menu define  -->
+  {% include "/admin/menu/menu_inc.html" %}
+  <!-- Left Menu end   -->
             	  
-                <div class="container_main">
-                    <h3>{{info['conn_name']}}</h3>
-{% if conn_page != 'company_info' %}
-                    <div class="search_box">
-                        <form action="" method="post" name="search">
-                            <fieldset>
-                                <legend>검색</legend>
-                                관측소별
-                                <select name="select_location" class="sel" style="margin-right:25px;margin-left:10px">
-                                </select>
-                                날짜
-                                <select name="select_year" class="sel" style="margin-left:10px">
-                                </select>
-                                <select name="select_month" class="sel" >
-                                </select>
-                                <select name="select_day" class="sel" >
-                                </select>
-                                <button type="button" class="btn_search" onclick="">검색</button>
-                            </fieldset>                             
-                        </form>
-                    </div>	    
-{% endif %}
-	                    <table class="table_list" style="margin-top:15px">
-		                        <thead>
-		                        	<tr>
+  <div class="container_main">
+
+	<div style="padding-top:0px;" id="home" class="container">
+        <input type="hidden" id="pro_id" value="{{pro_id}}">
+ 		<div class="panel-group" id="accordion">
+    		<div class="panel panel-default">
+    			<div class="panel-heading">
+					<table border="0" width="100%">
+					<tr>
+						<td>
+      						<h4 class="panel-title">
+        						<a data-toggle="collapse" href="#eLevels">{{info['conn_name']}}</a>
+      						</h4>
+						</td>
+                        <td>
+                            <input type="text" id="from"> ~ <input type="text" id="to">
+                        </td>
+                        <td align="right">
+                            <button type="submit" name="searchWorkForm" id="searchWorkForm" class="btn">Search</button>
+                            <button type="submit" name="saveWorkForm"   id="saveWorkForm" class="btn">등록</button>
+                        </td>
+					</tr>
+					</table>
+    			</div>
+
+    			<div id="eLevels" class="panel-collapse collapse in">
+					<div class="panel-body">
+                        <ul id="tree_for_tech_item">
+                            <ui id="table_view_ui">
+   <table class='bom_view'>
+   <thead>
+   	<tr>
 {% for data in json_content %}
 {%     if data['type'] == 'button' %}
 {%     elif data['view'] == 'true'  %}
-                                        <th>{{data['label']}}</th>
+          <th class='work_td1'>{{data['label']}}</th>
 {%     endif %}
 {% endfor %}
-                                        <th>Register Date</th>
-                                        <th>Last Modified</th>
-		                            </tr>
-		                        </thead>
-		                        <tbody>
+          <th class='work_td1'>Register Date</th>
+          <th class='work_td1'>Last Modified</th>
+    </tr>
+   </thead>
+   <tbody>
 {% set found = [0] %}
 {% for doc in result['doc']  %}
-    <tr>
+    <tr class="work_tr">
 {%     set mIdx = [0]  %}
 {%     for data in json_content %}
 {%         if mIdx[0] == 0 or mIdx[0] == 1 %}
-        <td><a href="javascript:fn_goView('{{doc['_id']}}');">{{doc[data['name']]}}</a></td>
+        <td class='work_td_content'><a href="javascript:fn_goView('{{doc['_id']}}');">{{doc[data['name']]}}</a></td>
 {%         else   %}
 {%              if data['type'] == 'multi_text' and data['view'] == 'true' %}
 {%                  set arr = data['datalist']  %}
-                   <td>
+                   <td class='work_td_content'>
 {%                  set j = [0]  %}
 {%                  for d in arr   %}
 {%                     if j[0] > 0 %}-{% endif%}
@@ -71,15 +78,15 @@
                    </td>
 {%              elif data['type'] == 'button' %}
 {%              elif data['view'] == 'true' %}
-                   <td>{{doc[data['name']]}}</td>
+                   <td class='work_td_content'>{{doc[data['name']]}}</td>
 {%              endif %}
 {%        endif  %}
 {%     set i = mIdx[0]+1 %}
 {%     set _ = mIdx.pop() %}
 {%     set _ = mIdx.append(i) %}
 {%     endfor %}
-        <td>{{doc['createDt']}}</td>
-        <td>{{doc['lastModified']}}</td>
+        <td class='work_td_content'>{{doc['createDt']}}</td>
+        <td class='work_td_content'>{{doc['lastModified']}}</td>
     </tr>
 {% set f = found[0] + 1 %}
 {% set _= found.pop() %}
@@ -88,6 +95,8 @@
 
                             </tbody>
                       </table>
+
+
 {% if conn_page != 'company_info' %}
                     <div class="pageNate">
                         <a class="start" id="start" href=""></a>
@@ -100,14 +109,24 @@
                     </div>
 {% endif %}
 
-        <br> <button type="button" class="btn_blue fl_right" onclick="" >List</button>  
+        <br> <button type="button" class="btn_blue fl_right" onclick="" >List</button>
 		    {% if result[conn_page] != 'company_info' %}<button type="button" id="create" class="btn_blue fl_right" onclick="" style="margin-right:10px">Register</button>
 		    {% elif conn_page == 'company_info' and found[0] == 0 %}
 		  	<button type="button" id="create" class="btn_blue fl_right" onclick="" style="margin-right:10px">Register</button>
 		    {% endif %}
-                </div>
+
+
+
+                            </ui>
+						</ul>
+					</div>
+    			</div>
             </div>
-            
+        </div>
+    </div>
+
+
+</div></div>
 <form id="commonForm" name="commonForm"></form>
      
 <script type="text/javascript">
@@ -125,10 +144,6 @@
 		  	 fn_nextProcess();
 		  });
 
-		  if ("{{msg}}" != "")
-		  {
-		        alert(msg);
-		  }
 	});
 	
 	function fn_createProcess(){
@@ -181,4 +196,4 @@
 	}
 </script>
             
-{% include ['bottom.html'] %}
+{% include ['/include/bottom.html'] %}

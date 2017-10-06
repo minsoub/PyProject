@@ -1,0 +1,220 @@
+{% include "/admin/header/admin_header.html" %}
+{% if result is defined %}
+{%    set _id = result['_id'] %}
+{%    set db_name = result['db_name']  %}
+{%    set col_name = result['col_name']  %}
+{%    set conn_url = result['conn_url']  %}
+{%    set conn_page = result['conn_page']  %}
+{%    set conn_name = result['conn_name']  %}
+{%    set content = result['content']  %}
+{% endif %}
+
+
+	    
+            <div id="section"> 
+            	  <!-- Left Menu define  -->
+            	  {% include "/admin/menu/menu_inc.html" %}
+            	  <!-- Left Menu end   -->
+<form id="frm" name="frm">  
+<input type="hidden" id="m_key" name="m_key" value="{{_id}}">
+<input type="hidden" id="mode" name="mode">
+<input type="hidden" id="page" name="page"  value="{{page}}">
+
+                <div class="container_main">
+                    <h3>Form Builder Management(Create)</h3>
+                    
+                    <table class="table_view" style="margin-top:15px">
+                        <colgroup>
+                            <col width="150px" />
+                            <col width="700px" />
+                        </colgroup>
+                        <tr>
+                            <th>Database Name</th>
+                            <td>
+                                <label for="db_name"></label>
+		                            <input type="text" id="db_name" name="db_name" class="input_box" value="{{db_name}}">
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Collection Name</th>
+                            <td>
+                                <label for="col_name"></label>
+		                            <input type="text" id="col_name" name="col_name" class="input_box" value="{{col_name}}">
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Connect URL</th>
+                            <td>
+                                <label for="conn_url"></label>
+		                            <input type="text" id="conn_url" name="conn_url" class="input_box" value="{{conn_url}}">
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Connect Page</th>                            
+                            <td>
+                                <label for="conn_page"></label>
+		                            <input type="text" id="conn_page" name="conn_page" class="input_box" value="{{conn_page}}">
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Connect Name</th>                            
+                            <td>
+                                <label for="conn_name"></label>
+		                            <input type="text" id="conn_name" name="conn_name" class="input_box" value="{{conn_name}}">
+                            </td>
+                        </tr>  
+                        <tr>
+                            <th>JSon Content</th>                            
+                            <td><textarea id="content" name="content" class="area_box">{{content}}</textarea></td>
+                        </tr>  
+                                                                   
+                    </table> 
+                    {% if _id is not defined %}
+                    <button type="button" id="create"  onclick="" class="pure-button" style="margin-top:15px">Create</button>
+                    {% else %}
+                    <button type="button" id="create"  onclick="" class="pure-button" style="margin-top:15px">Modify</button>
+                    <button type="button" id="delete"  onclick="" class="pure-button" style="margin-top:15px">Delete</button>
+                    {% endif %}
+                    <button type="button" id="cancel"  onclick="" class="pure-button" style="margin-top:15px;margin-right:10px">Cancel</button>
+                    <button type="button" id="preview" onclick="" class="pure-button" style="margin-top:15px;margin-right:10px">Preview</button>
+                </div>
+            </div>
+</form>            
+<form id="commonForm" name="commonForm"></form>     
+     
+<script type="text/javascript">
+	$(document).ready(function(){
+			$("#create").on("click", function(e){  
+				e.preventDefault();
+				fn_createProcess();
+			});
+
+			$("#cancel").on("click", function(e){  
+				e.preventDefault();
+				fn_cancelProcess();
+			});	
+			$("#delete").on("click", function(e){
+			    e.preventDefault();
+			    fn_deleteProcess();
+			});
+			$("#preview").on("click", function(e){  
+				e.preventDefault();
+				fn_previewProcess();
+			});
+		    if ("{{msg}}" != "None" && "{{msg}}" != "") {
+		        alert("{{msg}}")
+		    }
+	});
+	
+	function fn_createProcess(){
+			if ($("#db_name").val() == "")
+			{
+				  alert("DB 명을 입력하지 않았습니다!!!");
+				  $("#db_name").focus();
+				  return;
+		  }
+			if ($("#col_name").val() == "")
+			{
+				  alert("Collection 명을 입력하지 않았습니다!!!");
+				  $("#col_name").focus();
+				  return;
+		  }
+			if ($("#conn_url").val() == "")
+			{
+				  alert("Connect URL을 입력하지 않았습니다!!!");
+				  $("#conn_url").focus();
+				  return;
+		  }		  
+			if ($("#conn_page").val() == "")
+			{
+				  alert("Connect Page를 입력하지 않았습니다!!!");
+				  $("#conn_page").focus();
+				  return;
+		  }		
+			if ($("#conn_name").val() == "")
+			{
+				  alert("Connect Name을 입력하지 않았습니다!!!");
+				  $("#conn_name").focus();
+				  return;
+		  }	
+		  if ($("#content").val() == "")
+		  {
+		  		alert("JSON 데이터가 입력되지 않았습니다!!!");
+		  		$("#content").focus();
+		  		return;
+		  }
+		  
+		  if ($("#m_key").val() != "")
+		  {
+		  	  $("#mode").val("upst");
+		  }else {
+		  	  $("#mode").val("inst");
+		  }
+		  
+		  // JSON TEST
+		  try 
+		  {
+		      var data = $("#content").val();
+		      var contact = JSON.stringify(data);
+		      
+              var comSubmit = new ComSubmit("frm");
+			  comSubmit.setUrl("/admin/builder/form_builder_save");
+			  comSubmit.submit();
+		      		  	
+		  }catch(e)
+		  {
+		  		alert(E);
+		  }
+		  		  		  	  		  
+	}
+	function fn_deleteProcess() {
+	    if (confirm("삭제를 하시겠습니까? 삭제를 하시면 모든 데이터가 삭제됩니다!!!")) {
+	            var comSubmit = new ComSubmit("frm");
+	            $("#mode").val("del");
+			    comSubmit.setUrl("/admin/builder/form_builder_save");
+			    comSubmit.submit();
+	    }
+	}
+	function fn_cancelProcess () {
+        var comSubmit = new ComSubmit("frm");
+		comSubmit.setUrl("/admin/builder/form_builder_list");
+		comSubmit.addParam("search_kind", "");
+		comSubmit.addParam("word", "");
+		comSubmit.submit();
+	}
+	
+	function fn_previewProcess() {
+		  //alert($("#content").val());
+		  if ($("#content").val() == "")
+		  {
+		  		alert("JSON 데이터가 입력되지 않았습니다!!!");
+		  		$("#content").focus();
+		  		return;
+		  }
+		  try 
+		  {
+		      var data = $("#content").val();
+		      //var contact = JSON.parse(data);
+		      var contact = JSON.stringify(data);
+          //console.log(contact);
+      
+          var weburl = "/admin/builder/form_builder_preview";
+          var title  = "testpop";
+          var status = "toolbar=no,directories=no,scrollbars=auto,resizable=no,status=no,menubar=no,width=600, height=600, top=0,left=20"; 
+          window.open("", title, status); 
+
+          frm.target = title;
+          frm.method = "post";
+          frm.action = weburl;
+          frm.submit();
+          //var comSubmit = new ComSubmit("frm");
+			    //comSubmit.setUrl(weburl);
+			    //comSubmit.submit();
+		  }catch(e)
+		  {
+			    alert(e);
+		  }
+	}
+</script>
+            
+{% include ['/include/bottom.html'] %}

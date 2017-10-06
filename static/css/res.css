@@ -1,0 +1,76 @@
+#svgContainer {
+	position: relative;
+	top:0px;
+	width: 1000px;
+	height:500px;
+	/*overflow: auto;*/
+	border: solid 1px Gold;
+	padding : 0px;
+	margin: 0px;
+}
+svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+text.el{
+	text-anchor: left;
+	font-family:sans-serif; 
+	font-size:14px;
+}	
+
+line.ef{	
+    fill: none;
+    stroke: black;
+    stroke-width: 1;
+}
+text.ef{
+	text-anchor: left;
+	font-family:sans-serif; 
+	font-size:12px;
+}
+	
+rect.tech_env{
+	fill:none;
+	fill-opacity:0.1;
+	stroke:pink;
+	stroke-width:2;
+	stroke-opacity:0.9; 
+}
+rect.tech{
+	fill:white;
+	stroke:black;
+	stroke-width:1;
+	stroke-opacity:0.9; 
+}
+text.tech{
+	text-anchor: middle;
+	dominant-baseline:central;
+	font-family:sans-serif; 
+	font-size:12px;
+}	
+rect.tech_id{
+	fill:azure;
+	stroke:black;
+	stroke-width:1;
+	fill-opacity:0.1;
+	stroke-opacity:0.9; 
+}	
+text.tech_id{
+	text-anchor: middle;
+	fill:blue;
+	alignment-baseline:central;
+	font-family:sans-serif; 
+	font-size:10px;
+}text.act_id{
+	text-anchor: middle;
+	fill:red;
+	alignment-baseline:central;
+	font-family:sans-serif; 
+	font-size:10px;
+}
+text.arrow_label{
+	text-anchor: middle;
+	font-family:sans-serif; 
+	font-size:10px;
+}	

@@ -1,0 +1,222 @@
+{
+    "general": {
+        "database": "mjoungDB",
+        "collection": "WorkerCollection"
+    },
+    "workForms":[
+      {
+          "title": "성 명",
+          "next": "true",
+          "class": "work_td1",
+          "is_main": "true",
+          "form_class": "work_td2",
+          "forms": [
+            {
+                "name": "name",
+                "type": "text",
+                "maxlength": 20,
+                "class": "work_form_input"
+            }
+          ]
+      },
+      {
+          "title": "주민번호",
+          "next": "true",
+          "class": "work_td1",
+           "is_main": "true",
+          "form_class": "work_td2",
+          "forms": [
+            {
+                "name": "jumin",
+                "label": "('-' 없이)",
+                "type": "text",
+                "maxlength": 13,
+                "is_num": "true",
+                "class": "work_form_input"
+            }
+          ]
+      },
+      {
+          "title": "등록일자",
+          "next": "false",
+          "class": "work_td1",
+          "form_class": "work_td2",
+          "forms": [
+            {
+                "name": "regDt",
+                "type": "text",
+                "class": "work_form_input",
+                "maxlength": 12,
+                "is_calender" : "true"
+            }
+          ]
+      },
+      {
+          "title": "생년월일",
+          "next": "true",
+          "class": "work_td1",
+          "is_main": "true",
+          "form_class": "work_td2",
+          "forms": [
+            {
+                "name": "birth_year",
+                "label": "년",
+                "type": "text",
+                "maxlength": 4,
+                "class": "work_year_input",
+                "is_num": "true"
+            },
+            {
+                 "name": "birth_month",
+                "label": "월",
+                "type": "text",
+                "maxlength": 2,
+                "class": "work_month_input",
+                "is_num": "true"
+            },
+            {
+                 "name": "birth_day",
+                "label": "일",
+                "type": "text",
+                 "maxlength": 2,
+                "class": "work_day_input",
+                "is_num": "true"
+            }
+          ]
+      },
+      {
+          "title": "혈액형",
+          "next": "true",
+          "class": "work_td1",
+          "form_class": "work_td2",
+          "forms": [
+            {
+                "name": "blood_type",
+                "type": "combo",
+                "class": "work_combo",
+                "data":[ {"name":"A", "value":"A"}, {"name":"B", "value":"B"}, {"name":"O", "value":"O"}, {"name":"AB", "value":"AB"} ]
+            }
+          ]
+      },
+      {
+          "title": "성별",
+          "next": "false",
+          "class": "work_td1",
+          "form_class": "work_td2",
+          "forms": [
+            {
+                "name": "sex",
+                "type": "radio",
+                "class": "work_radio",
+                "data": [ {"value":"1", "name":"남"}, {"value":"2", "name":"여"}]
+            }
+          ]
+      },
+      {
+          "title": "일반전화",
+          "next": "true",
+          "class": "work_td1",
+          "is_main": "true",
+          "form_class": "work_td2",
+          "forms": [
+            {
+                "name": "tel1",
+                "type": "combo",
+                "class": "work_combo",
+                "label": " - ",
+                "data": [
+                  {"name": "선택", "value": ""},
+                  {"name": "02", "value": "02"},
+                  {"name": "032", "value": "032"}
+                ]
+            },
+            {
+                "name": "tel2",
+                "type": "text",
+                "maxlength": 4,
+                "class": "work_year_input",
+                "label": " - ",
+                "is_num": "true"
+            },
+            {
+                "name": "tel3",
+                "type": "text",
+                "maxlength": 4,
+                "class": "work_year_input",
+                "is_num": "true"
+            }
+          ]
+      },
+      {
+          "title": "주소",
+          "next": "false",
+          "class": "work_td1",
+          "form_class": "work_td2",
+          "colspan": 3,
+          "forms": [
+            {
+                "name": "addr1",
+                "type": "text",
+                "maxlength": 200,
+                "class": "work_addr_input"
+            }
+          ]
+      },
+      {
+          "title": "휴대전화",
+          "next": "true",
+          "class": "work_td1",
+          "is_main": "true",
+          "form_class": "work_td2",
+          "forms": [
+            {
+                "name": "htel1",
+                "type": "combo",
+                "class": "work_combo",
+                "label": " - ",
+                "data": [
+                  {"name": "선택", "value": ""},
+                  {"name": "02", "value": "02"},
+                  {"name": "032", "value": "032"}
+                ]
+            },
+            {
+                "name": "htel2",
+                "type": "text",
+                "maxlength": 4,
+                "class": "work_year_input",
+                "label": " - ",
+                "is_num": "true"
+            },
+            {
+                "name": "htel3",
+                "type": "text",
+                "maxlength": 4,
+                "class": "work_year_input",
+                "is_num": "true"
+            }
+          ]
+      },
+      {
+          "title": "근로구분",
+          "next": "false",
+          "class": "work_td1",
+          "form_class": "work_td2",
+          "colspan": 3,
+          "forms": [
+            {
+                "name": "work_type",
+                "type": "combo",
+                "class": "work_combo",
+                "data": [
+                  {"name": "선택", "value": ""},
+                  {"name": "정규직", "value": "01"},
+                  {"name": "계약직", "value": "02"},
+                  {"name": "일용직", "value": "03"},
+                  {"name": "아르바이트", "value": "04"}
+                ]
+            }
+          ]
+      }
+    ]
+}

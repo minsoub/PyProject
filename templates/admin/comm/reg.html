@@ -12,9 +12,36 @@
        <!-- Left Menu define  -->
        {% include "/admin/menu/menu_inc.html" %}
        <!-- Left Menu end   -->
-      <div class="container">
-       <h3>{{info['conn_name']}}</h3>
- 
+      <div class="container_main">
+
+	<div style="padding-top:0px;" id="home" class="container">
+        <input type="hidden" id="pro_id" value="{{pro_id}}">
+ 		<div class="panel-group" id="accordion">
+    		<div class="panel panel-default">
+    			<div class="panel-heading">
+					<table border="0" width="100%">
+					<tr>
+						<td>
+      						<h4 class="panel-title">
+        						<a data-toggle="collapse" href="#eLevels">{{info['conn_name']}}</a>
+      						</h4>
+						</td>
+                        <td>
+                            <!--  input type="text" id="from"> ~ <input type="text" id="to"  -->
+                        </td>
+                        <td align="right">
+                            <!--  button type="submit" name="searchWorkForm" id="searchWorkForm" class="btn">Search</button>
+                            <button type="submit" name="saveWorkForm"   id="saveWorkForm" class="btn">등록</button  -->
+                        </td>
+					</tr>
+					</table>
+    			</div>
+
+    			<div id="eLevels" class="panel-collapse collapse in">
+					<div class="panel-body">
+                        <ul id="tree_for_tech_item">
+                            <ui id="table_view_ui">
+
  		<!--  div class="search_box"  -->
 			<div class="col-md-6">
 				<form id="form_output" name="form_output">
@@ -26,12 +53,20 @@
 			</div>
 			<div id="input-alert"></div>
 		<!--  /div  -->
-		
+
 		<div class="row" style="margin-top: 20px">
 
-		</div>                   
-   </div>
- </div>
+		</div>
+
+                            </ui>
+						</ul>
+					</div>
+    			</div>
+            </div>
+        </div>
+    </div>
+
+ </div></div>
 <!--  form id="commonForm" name="commonForm"></form  -->
      
 	<script>
@@ -132,4 +167,4 @@
     		
 	</script>
             
-{% include ['bottom.html'] %}
+{% include ['/include/bottom.html'] %}

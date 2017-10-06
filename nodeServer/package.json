@@ -1,0 +1,12 @@
+{
+  "name": "MES Project",
+  "main": "server.js",
+  "version": "1.0.0",
+  "dependencies": {
+    "body-parser": "~1.14.2",
+    "ejs": "~2.4.1",
+    "express": "~4.13.1",
+    "express-session": "~1.13.0",
+    "mongoose": "^4.10.8"
+  }
+}

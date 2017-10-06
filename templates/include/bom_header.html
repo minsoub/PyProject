@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>MES main</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/static/css/pure-min.css">
+  <link rel="stylesheet" href="/static/css/common.css" />
+  <link rel="stylesheet" href="/static/css/layout.css" />
+  <script src="/static/js/common.js"></script>
+
+  <script type="text/javascript">
+		var timerStart = Date.now();
+  </script>
+
+  <!-- bom header -->
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+      <link href="http://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
+  <link href="https://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css" rel="stylesheet">
+	<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+
+
+  <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
+
+  <script src="/static/vendors/jsoneditor/dist/jsoneditor.js"></script>
+  <link href="/static/vendors/jsoneditor/dist/jsoneditor.css" rel="stylesheet" type="text/css">
+
+  <link href="/static/vendors/jQuery-contextMenu-master/dist/jquery.contextMenu.css" rel="stylesheet" type="text/css" />
+  <script src="/static/vendors/jQuery-contextMenu-master/dist/jquery.contextMenu.js" type="text/javascript"></script>
+  <script src="/static/vendors/jQuery-contextMenu-master/dist/jquery.ui.position.min.js" type="text/javascript"></script>
+
+  <script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+
+	<link rel="stylesheet" type="text/css" href="/static/vendors/katex/katex.min.css">
+	<script type="text/javascript" src="/static/vendors/katex/katex.min.js"></script>
+	<script src="/static/vendors/glpk.js/dist/glpk.min.js"></script>
+
+ <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
+
+  <script src="/static/main.js"> </script>
+  <script src="/static/js/draw.js"></script>
+  <script src="/static/js/part_mng.js"></script>
+  <script src="/static/js/bomProcess.js"></script>
+  <script src="/static/js/jsonform.js"></script>
+  <script src="/static/js/command.js"></script>
+  <script src="/static/js/item.js"></script>
+  <script src="/static/js/work.js"></script>
+  <link rel="stylesheet" type="text/css" href="/static/css/main.css">
+  <link rel="stylesheet" type="text/css" href="/static/css/res.css">
+
+
+</head>
+<body style="position:relative;" data-spy="scroll" data-target="#navbar-example">
+
+ <div id="wrap">
+      <div id="header">
+           <div class="head">
+               <h1 class="logo fl_left"><a href="/">Menufacturing Execution System</a></h1>
+               <div class="gnb fl_left">
+                 <ul>
+                    <li><a href="/bom/item_mng">BOM Management</a></li>
+                    <li><a href="/work/work_list">Worker Management</a></li>
+                    <li><a href="/process/process_select">Process Management</a></li>
+                    <li><a href="/admin/reg_list?conn_page=company_info">Company Management</a></li>
+                 </ul>
+               </div>
+               <div class="login fl_right">
+                  	<img src="/static/image/icon_member.png" style="padding-right:10px">
+                   	{% if session["admin_chk"] is defined  %}
+                   		 [My Page] [<a href="/sign_out">Sign-Out</a>]
+                   	{% else %}
+                  		 [<a href="/member/member_register">Register</a>] [<a href="/sign_in">Sign-In</a>]
+                   	{% endif %}
+                   	[<a href="/admin">관리자 모드</a>]
+               </div>
+            </div>
+      </div>
+ </div>

@@ -3,19 +3,17 @@
   set admin_path = "/admin"
 %}
  <div class="left_menu">
-
  	 <ul>
 		 {% if session["admin_chk"] == "2" %}
- 	 	  <li><a href="{{ admin_path }}/member/user_list">업체 관리자 정보관리</a></li>
- 	 	  <li><a href="{{ admin_path }}/builder/form_builder_list">Form Builder List</a></li>
+ 	 	  <li class="left_menu_list"><a href="{{ admin_path }}/member/user_list">업체 관리자 정보관리</a></li>
+ 	 	  <li class="left_menu_list"><a href="{{ admin_path }}/builder/form_builder_list">Form Builder List</a></li>
  	 	 {% elif session["admin_chk"] == "1" %}
- 	 		<li><a href="{{ admin_path }}/reg_list?conn_page=company_info">자사 정보 관리</a></li>
- 	 		<li><a href="{{ admin_path }}/reg_list?conn_page=member_reg">사내 사용자 관리</a></li>
-            <li><a href="{{ admin_path }}/reg_list?conn_page=other_info">외주업체 관리</a></li>
-            <li><a href="{{ admin_path }}/reg_list?conn_page=project">사내프로젝트 관리</a></li>
+ 	 		<li class="left_menu_list"><a href="{{ admin_path }}/reg_list?conn_page=company_info">자사 정보 관리</a></li>
+ 	 		<li class="left_menu_list"><a href="{{ admin_path }}/reg_list?conn_page=member_reg">사내 사용자 관리</a></li>
+            <li class="left_menu_list"><a href="{{ admin_path }}/reg_list?conn_page=other_info">외주업체 관리</a></li>
+            <li class="left_menu_list"><a href="{{ admin_path }}/reg_list?conn_page=project">사내프로젝트 관리</a></li>
 		 {% else %}
              None
 		 {% endif %}
    </ul>
-   
  </div>

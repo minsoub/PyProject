@@ -1,0 +1,124 @@
+{% include "/include/bom_header.html" %}
+
+<div id="section">
+    <!-- Left Menu define  -->
+    {% include "/worker/work_menu_inc.html" %}
+    <!-- Left Menu end   -->
+
+	<div class="container_main">
+
+	<div style="padding-top:0px;" id="home" class="container">
+        <input type="hidden" id="pro_id" value="{{pro_id}}">
+ 		<div class="panel-group" id="accordion">
+    		<div class="panel panel-default">
+    			<div class="panel-heading">
+					<table border="0" width="100%">
+					<tr>
+						<td>
+      						<h4 class="panel-title">
+        						<a data-toggle="collapse" href="#eLevels">작업자 관리</a>
+      						</h4>
+						</td>
+                        <td>
+                            <input type="text" id="from"> ~ <input type="text" id="to">
+                        </td>
+                        <td align="right">
+                            <button type="submit" name="searchWorkForm" id="searchWorkForm" class="btn">Search</button>
+                            <button type="submit" name="saveWorkForm"   id="saveWorkForm" class="btn">등록</button>
+                        </td>
+					</tr>
+					</table>
+    			</div>
+
+    			<div id="eLevels" class="panel-collapse collapse in">
+					<div class="panel-body">
+                        <ul id="tree_for_tech_item">
+                            <ui id="table_view_ui">
+<table><tr><td>dafasf</td></tr></table>
+                            </ui>
+						</ul>
+					</div>
+    			</div>
+            </div>
+
+            <div class="panel panel-default">
+    			<div class="panel-heading">
+                    <ul id="work_register_form_head">
+                        <li id=""work_register_form_head_li>
+					        <table border="0" width="100%">
+					        <tr>
+						        <td>
+      						        <h4 class="panel-title">
+        						        <a data-toggle="collapse" href="#workLevels">작업자 등록</a>
+      						        </h4>
+						        </td>
+                                <td>&nbsp;</td>
+                                <td align="right">
+                                    <button type="submit" name="saveWork"   id="saveWork"   class="btn">저장</button>
+                                    <button type="submit" name="deleteWork" id="deleteWork" class="btn">삭제</button>
+                                </td>
+					        </tr>
+					        </table>
+                        </li>
+                    </ul>
+    			</div>
+
+    			<div id="workLevels" class="panel-collapse collapse in">
+					<div class="panel-body">
+                        <ul id="work_register_form">
+
+						</ul>
+					</div>
+    			</div>
+
+    		</div>
+        </div>
+			<!--  div id="viewers" class="panel panel-default">
+    			<div class="panel-heading"  id="JSONheader">
+      				<h4 class="panel-title">
+        				<a data-toggle="collapse"  href="#JSONclient" >JSON Viewer : save button for updated json</a>
+      				</h4>
+    			</div>
+    			<div id="JSONclient" class="panel-collapse collapse in">
+					<div class="panel-body">
+						<h3> json editor with file : <span id="jsonSpan"> </span></h3>
+						<div id="jsoneditor"></div>
+	     			</div>
+    			</div>
+    		</div  -->
+
+  		</div>
+	</div>
+</div>
+
+<script language="javascript">
+    $(document).ready(function (e) {
+	    console.log("Time until DOMready: ", Date.now()-timerStart);
+{% if result is defined %}
+{%    set data = result %}
+{% else %}
+{$    set data = "" %}
+{% endif %}
+
+{% if html_form is defined %}
+{%    set html_data = html_form %}
+{% else %}
+{$    set html_data = "" %}
+{% endif %}
+
+        read_json_html_data({{html_data|safe}});  // TODO: json html data
+	    read_json_worker_print({{data|safe}});	  // TODO: work.js
+    });
+
+    $( function() {
+        $( "#from" ).datepicker({
+            dateFormat: 'yy-mm-dd'
+        });
+        $( "#to" ).datepicker({
+            dateFormat: 'yy-mm-dd'
+        });
+    } );
+
+
+</script>
+{% include "/include/bottom.html" %}

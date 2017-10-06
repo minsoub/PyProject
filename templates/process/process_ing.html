@@ -1,0 +1,102 @@
+{% include "/include/bom_header.html" %}
+
+<div id="section">
+    <!-- Left Menu define  -->
+    {% include "/process/process_menu_inc.html" %}
+    <!-- Left Menu end   -->
+
+	<div class="container_main">
+
+	<div style="padding-top:0px;" id="home" class="container">
+        <input type="hidden" id="pro_id" value="{{pro_id}}">
+        <input type="hidden" id="bom_id" value="{{bom_id}}">
+ 		<div class="panel-group" id="accordion">
+    		<div class="panel panel-default">
+    			<div class="panel-heading">
+					<table border="0" width="100%">
+					<tr>
+						<td>
+      						<h4 class="panel-title">
+        						<a data-toggle="collapse" href="#eLevels">부품공정 관리 - {{pro_name}}</a>
+      						</h4>
+						</td>
+                        <td align="right">
+                            <button class="pure-button pure-button-primary" id="saveProcess" onclick="save_tech(this)">Save Process</button>
+                            <button class="pure-button pure-button-primary" id="deleteProcess" onclick="delete_tech(this)" style="display:none;">Delete Process</button>
+                        </td>
+					</tr>
+					</table>
+    			</div>
+
+    			<div id="eLevels" class="panel-collapse collapse in">
+					<div class="panel-body">
+						<ul id="tree_for_el_ef"></ul>
+					</div>
+    			</div>
+    		</div>
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+					<table border="0" width="100%">
+					<tr>
+						<td>
+      						<h4 class="panel-title">
+        						<a data-toggle="collapse" href="#tLevels">공정(Process) 관리</a>
+      						</h4>
+						</td>
+                        <td align="right">
+                            <!--  button class="pure-button pure-button-primary" onclick="save_tech(this)">Save Process</button>
+                            <button class="pure-button pure-button-primary" onclick="delete_tech(this)">Delete Process</button -->
+                        </td>
+					</tr>
+					</table>
+                </div>
+                <div id="tLevels" class="panel-collapse collapse in">
+		            <div class="panel-body">
+
+                        <ul id="tree_for_tech"></ul>
+                    </div>
+                </div>
+            </div>
+
+    		<div class="panel panel-default">
+				<div class="panel-heading">
+					<h4 class="panel-title"> <a data-toggle="collapse" href="#RESViewer">RES</a>  </h4>
+				</div>
+				<div id="RESViewer" class="panel-collapse collapse in">
+					<div class="panel-body">
+						<button class="pure-button pure-button-primary" onclick="drawProcess(this)">Draw RES</button>
+				 		<span> RES supports pan and zoom, and you can move technology. </span>
+						<div id="svgContainer"></div>
+					</div>
+				</div>
+			</div>
+
+
+
+
+
+			<div id="viewers" class="panel panel-default"> <!-- class="container"  -->
+    			<div class="panel-heading"  id="JSONheader">
+      				<h4 class="panel-title">
+        				<a data-toggle="collapse"  href="#JSONclient" >JSON Viewer : save button for updated json</a>
+      				</h4>
+    			</div>
+    			<div id="JSONclient" class="panel-collapse collapse in">
+					<div class="panel-body">
+						<h3> json editor with file : <span id="jsonSpan"> </span></h3>
+						<div id="jsoneditor"></div>
+	     			</div>
+    			</div>
+    		</div>
+
+  		</div>
+	</div>
+</div>
+<script language="javascript">
+    $(document).ready(function (e) {
+	    console.log("Time until DOMready: ", Date.now()-timerStart);
+	    process_read_json_getdata();	  // make all ts for each excelRange
+    });
+</script>
+{% include "/include/bottom.html" %}

@@ -1,50 +1,48 @@
-{% extends "layout.html" %}
+{% include "/include/header.html" %}
 
-{% block body %}
+<div id="section">
 
-            <div id="section"> 
+ <div class="container">
 
-        	  
-            	  <div class="container">
-            	  <h3>관리자 로그인</h3>
-            	  
-            	  
- <form name="frm" id="frm" class="form-horizontal">
- <input type="hidden" id="mode" name="mode">
- <input type="hidden" id="m_key" name="m_key" value="<?=$id?>">
- <input type="hidden" id="regChk">
-  <div class="form-group">
-    <label class="control-label col-sm-2" for="email">아이디(메일주소):</label>
-    <div class="col-sm-10">
-      <input type="email" class="input_box" id="id" name="id" value="{% if user_id != None %}{{ user_id }}{% endif %}" placeholder="Enter email" style="width:320px;">
+   <div class="admin_login_box">
+
+    <h3>관리자 로그인1</h3>
+
+    <form name="frm" id="frm"  class="form-horizontal">
+
+    <div class="form-group">
+        <label class="control-label col-sm-4" for="email">아이디(메일주소):</label>
+        <div class="col-sm-8">
+        <input type="email" class="input_box" id="id" name="id" value="{% if user_id != None %}{{ user_id }}{% endif %}" placeholder="Enter email" style="width:320px;">
+        </div>
     </div>
-  </div>
-  <div class="form-group">
-    <label class="control-label col-sm-2" for="pass">Password:</label>
-    <div class="col-sm-10">
-      <input type="password" class="input_box" id="pass" name="pass" value="{% if user_pass != None %}{{ user_pass }}{%endif%}" placeholder="Enter password"  style="height:35px;width:220px;">
+    <div class="form-group">
+        <label class="control-label col-sm-4" for="pass">Password:</label>
+        <div class="col-sm-8">
+        <input type="password" class="input_box" id="pass" name="pass" value="{% if user_pass != None %}{{ user_pass }}{%endif%}" placeholder="Enter password"  style="height:35px;width:220px;">
+        </div>
     </div>
-  </div>
   
-   <div class="form-group">
-    <div class="col-sm-offset-2 col-sm-10">
-      <div class="checkbox">
-        <label><input type="checkbox" name="re_save" value="Y" {% if re_save != None %}{% if re_save == "Y" %} checked{%endif%}{%endif%}> Remember me</label>
-      </div>
+    <div class="form-group">
+        <div class="col-sm-offset-4 col-sm-8">
+          <div class="checkbox">
+            <label><input type="checkbox" name="re_save" value="Y" {% if re_save != None %}{% if re_save == "Y" %} checked{%endif%}{%endif%}> Remember me</label>
+        </div>
+        </div>
     </div>
-  </div>
   
-  <div class="form-group">
-    <div class="col-sm-offset-2 col-sm-10">
-      <button type="button" id="signin" class="btn btn-default">로그인하기</button>
-      <button type="button" id="cencel" class="btn btn-default">취소하기</button>
+    <div class="form-group">
+        <div class="col-sm-offset-4 col-sm-8">
+        <button type="button" id="signin" class="btn btn-default">로그인하기</button>
+        <button type="button" id="cencel" class="btn btn-default">취소하기</button>
+        </div>
     </div>
-  </div>
-</form> 
 
+    </form>
+    </div>  <!-- login_box  -->
   
-                </div>
-            </div>
+  </div>  <!-- div continaer  -->
+</div>   <!-- div section   -->
             
 <form id="commonForm" name="commonForm"></form>     
      
@@ -110,4 +108,4 @@
 	}
 </script>
             
-{% endblock %}
+{% include "/include/bottom.html" %}

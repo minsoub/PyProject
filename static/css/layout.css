@@ -1,11 +1,10 @@
-/* 메인 (index)*/
 
 .left_menu {
     width: 220px;
-    height:800px;
-    margin-top: 0px;    
-    float: left; 
-    border-right: 1px solid #d3d3d3;  
+    /* height:800px; */
+    margin-top: 20px;
+    float: left;
+    /* border-right: 1px solid #d3d3d3;    */
 }
 .left_menu ul {
     list-style-type: none;
@@ -28,16 +27,16 @@
 .empty_menu {
     width: 30px;
     height:800px;
-    margin-top: 0px;    
-    float: left; 
+    margin-top: 0px;
+    float: left;
 }
 
-.container_full {    
+.container_full {
     position: relative;
     //width: 750px;
     margin: auto;
     margin-left: 50px;
-    
+
 }
 
 
@@ -46,14 +45,14 @@
     width: 70%;
     margin: auto;
     margin-top: 35px;
-    
+
 }
 .container_pop {
     position: relative;
     width: 760px;
     margin: auto;
     margin-top: 35px;
-    
+
 }
 .wind_box {
     width: 410px;
@@ -91,7 +90,7 @@ h3 {
     width: 60px;
     height: 25px;
     font-size: 11px;
-    color: #fff;    
+    color: #fff;
     background: #858585;
     border-radius: 3px;
     margin-top: 20px;
@@ -115,7 +114,7 @@ h3 {
     line-height: 35px;
     text-align: center;
     font-weight: bold;
-    float: left;   
+    float: left;
     border-radius: 8px;
 }
 .box1 {
@@ -124,42 +123,42 @@ h3 {
     font-size: 14px;
     color:#666666;
     text-align: center;
-    float: left;   
+    float: left;
     border-radius: 8px;
-    
+
 }
 .s_01 {
     height: 70px;
     background-image: url(../image/box_01.png);
-    background-repeat: repeat-x;    
+    background-repeat: repeat-x;
     border: 1px solid #694ca9;
 }
 .s_02 {
     height: 36px;
     background-image: url(../image/box_02.png);
-    background-repeat: repeat-x;    
+    background-repeat: repeat-x;
     border: 1px solid #3a9a8d;
 }
 .s_02_1 {
-    height: 36px; 
+    height: 36px;
     border: 1px solid #3a9a8d;
 }
 .s_03 {
     height: 36px;
     background-image: url(../image/box_03.png);
-    background-repeat: repeat-x;    
+    background-repeat: repeat-x;
     border: 1px solid #a6c948;
 }
 .s_03_1 {
     text-align: right;
     padding-right: 8px;
-    height: 36px;   
+    height: 36px;
     border: 1px solid #a6c948;
 }
 .s_04_1 {
     text-align: right;
     padding-right: 8px;
-    height: 36px;   
+    height: 36px;
     border: 1px solid #cccccc;
 }
 
@@ -171,42 +170,10 @@ progress {
     color: #49b74f;
 }
 
-table {
-    border-collapse: collapse;
-    font-size: 14px;
-    width: 100%;
-}
 
 
-.table_scan {    
-    border:2px solid #d8d8d8;
-}
-.table_scan th{
-    background: #f9f4ee;
-    height: 40px;
-    border-bottom:1px solid #e0c5a7;
-}
-.table_scan td{
-    background: #fff;
-    height: 40px;
-    border-bottom:1px solid #d8d8d8;
-    padding-left: 10px;
-}
 
-.table_alaram {    
-    border:2px solid #d8d8d8;
-}
-.table_alaram th{
-    background: #fbfaeb;
-    height: 40px;
-    border-bottom:1px solid #ebe89b;
-}
-.table_alaram td{
-    background: #fff;
-    height: 40px;
-    border-bottom:1px solid #d8d8d8;
-    padding-left: 10px;
-}
+
 
 
 /* 서브페이지 */
@@ -255,27 +222,27 @@ select {
 
 /* 버튼종류 */
 button {
-    display: inline-block;    
+    display: inline-block;
     cursor: pointer;
     font-weight: bold;
     text-align: center;
     border-radius: 3px;
 }
-.btn_search {    
-    background: #4e4e4e;    
+.btn_search {
+    background: #4e4e4e;
     height: 33px;
     line-height: 25px;
-    padding: 0 25px; 
+    padding: 0 25px;
     font-size: 14px;
-    color: #fff;    
+    color: #fff;
 }
-.btn_blue {    
-    background: #335e8a;    
+.btn_blue {
+    background: #335e8a;
     height: 33px;
     line-height: 25px;
-    padding: 0 25px; 
+    padding: 0 25px;
     font-size: 14px;
-    color: #fff;    
+    color: #fff;
 }
 
 
@@ -426,3 +393,12 @@ tr:nth-child(odd) { --- 홀수행
 }
 
 
+.admin_login_box {
+    width: 660px;
+    height: 300px;
+    padding-left: 10px;
+    margin-top: 60px;
+    font-size:14px;
+    border: 2px solid #dadada;
+    color: #333333;
+}
