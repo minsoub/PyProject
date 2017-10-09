@@ -1,0 +1,130 @@
+{% include "/include/bom_header.html" %}
+
+<div id="section">
+    <!-- Left Menu define  -->
+    {% include "/admin/menu/menu_inc.html" %}
+    <!-- Left Menu end   -->
+
+	<div class="container_main">
+
+	<div style="padding-top:0px;" id="home" class="container">
+        <input type="hidden" id="pro_id" value="{{pro_id}}">
+ 		<div class="panel-group" id="accordion">
+    		<div class="panel panel-default">
+    			<div class="panel-heading">
+					<table border="0" width="100%">
+					<tr>
+						<td>
+      						<h4 class="panel-title">
+        						<a data-toggle="collapse" href="#eLevels">프로젝트 관리</a>
+      						</h4>
+						</td>
+                        <td>
+                            <!--  input type="text" id="from"> ~ <input type="text" id="to"  -->
+                        </td>
+                        <td align="right">
+                            <!--  button type="submit" name="searchWorkForm" id="searchWorkForm" class="btn">Search</button  -->
+                            <button type="submit" name="saveProjectForm"   id="saveProjectForm" class="btn">등록</button>
+                        </td>
+					</tr>
+					</table>
+    			</div>
+
+    			<div id="eLevels" class="panel-collapse collapse in">
+					<div class="panel-body">
+                        <ul id="tree_for_tech_item">
+                            <ui id="table_view_ui">
+
+                                <table class='bom_view'>
+                                    <!-- Header define -->
+                                    <tr id="project_list_header">
+                                        <td class="work_td1">프로젝트명</td>
+                                        <td class="work_td1">프로젝트설명</td>
+                                        <td class="work_td1">생성자</td>
+                                        <td class="work_td1">생성일자</td>
+                                        <td class="work_td1">수정일자</td>
+                                    </tr>
+
+                                    <tr id="project_list_view" class='work_tr'>
+                                    <!-- 데이터  -->
+                                    </tr>
+                                </table>
+
+                            </ui>
+						</ul>
+					</div>
+    			</div>
+            </div>
+
+            <div class="panel panel-default">
+    			<div class="panel-heading">
+                    <ul id="work_register_form_head">
+                        <li id=""work_register_form_head_li>
+					        <table border="0" width="100%">
+					        <tr>
+						        <td>
+      						        <h4 class="panel-title">
+        						        <a data-toggle="collapse" href="#workLevels">프로젝트 등록</a>
+      						        </h4>
+						        </td>
+                                <td>&nbsp;</td>
+                                <td align="right">
+                                    <button type="submit" name="saveProject"   id="saveProject"   class="btn">저장</button>
+                                    <button type="submit" name="deleteProject" id="deleteProject" class="btn">삭제</button>
+                                </td>
+					        </tr>
+					        </table>
+                        </li>
+                    </ul>
+    			</div>
+
+    			<div id="workLevels" class="panel-collapse collapse in">
+					<div class="panel-body">
+                        <ul id="work_register_form">
+
+						</ul>
+					</div>
+    			</div>
+
+    		</div>
+        </div>
+			<!--  div id="viewers" class="panel panel-default">
+    			<div class="panel-heading"  id="JSONheader">
+      				<h4 class="panel-title">
+        				<a data-toggle="collapse"  href="#JSONclient" >JSON Viewer : save button for updated json</a>
+      				</h4>
+    			</div>
+    			<div id="JSONclient" class="panel-collapse collapse in">
+					<div class="panel-body">
+						<h3> json editor with file : <span id="jsonSpan"> </span></h3>
+						<div id="jsoneditor"></div>
+	     			</div>
+    			</div>
+    		</div  -->
+
+  		</div>
+	</div>
+</div>
+
+<script language="javascript">
+    $(document).ready(function (e) {
+	    console.log("Time until DOMready: ", Date.now()-timerStart);
+{% if result is defined %}
+{%    set data = result %}
+{% else %}
+{$    set data = "" %}
+{% endif %}
+        // 프로젝트 리스트 데이터를 셋업한다.
+	    read_json_process_list_setup({{data|safe}});	  // TODO: work.js
+    });
+
+    $( function() {
+        $( "#from" ).datepicker({
+            dateFormat: 'yy-mm-dd'
+        });
+        $( "#to" ).datepicker({
+            dateFormat: 'yy-mm-dd'
+        });
+    } );
+</script>
+{% include "/include/bottom.html" %}

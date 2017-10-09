@@ -1,4 +1,42 @@
 /* here is for my style*/
+.td_120 {
+    text-align: center;
+    width: 120px;
+    height: 28px;
+    border: 1px solid #bcbcbc;
+	padding-left : 1em;
+	padding-right : 1em;
+}
+.input_200 {
+	width : 200px;
+	height: 24px;
+	background-color: #ffffff;
+	background-size: 20px 20px;
+	background-repeat:no-repeat;
+	background-position:2px;
+	padding: 4px;
+	margin-top:2px;
+	border-radius: 5px 5px 5px;
+	border: 1px solid blue;
+	position:relative;
+	padding-left : 1em;
+	padding-right : 1em;
+}
+.selectProjectCombo {
+	width : 220px;
+	height: 34px;
+	background-color: #bcbcbc;
+	background-size: 20px 20px;
+	background-repeat:no-repeat;
+	background-position:2px;
+	padding: 4px;
+	margin-top:2px;
+	border-radius: 5px 5px 5px;
+	border: 1px solid blue;
+	position:relative;
+	padding-left : 1em;
+	padding-right : 1em;
+}
 .work_td1 {
     text-align: center;
     width: 90px;
@@ -240,6 +278,70 @@
 	text-align: center;
 	padding : .4em;
 }
+.ef .name_title, .code_title, .p_name_title .p_code_title{
+	display: inline-block;
+	color : black;
+	font-size: 13px;
+	width:160px;
+	margin-left:20px;
+	border: 0.5px solid blue;
+}
+
+.ef .p_name_title{
+	display: inline-block;
+	width : 160px;
+	height: 24px;
+	background-color: #cecece;
+	background-size: 20px 20px;
+	background-repeat:no-repeat;
+	background-position:2px;
+	padding: 4px;
+	margin-top:2px;
+	border-radius: 5px 5px 5px;
+	border: 1px solid blue;
+	text-align: center;
+	position:relative;
+	padding-left : 1em;
+	padding-right : 1em;
+}
+
+.ef .p_code_title{
+	display: inline-block;
+	width : 120px;
+	height: 24px;
+	background-color: #cecece;
+	background-size: 20px 20px;
+	background-repeat:no-repeat;
+	background-position:2px;
+	padding: 4px;
+	margin-top:2px;
+	border-radius: 5px 5px 5px;
+	border: 1px solid blue;
+	text-align: center;
+	position:relative;
+	padding-left : 1em;
+	padding-right : 1em;
+}
+.ef .unit_title, .ksk_title, .qty_title{
+	display: inline-block;
+	width : 120px;
+	height: 24px;
+	background-color: #cecece;
+	background-size: 20px 20px;
+	background-repeat:no-repeat;
+	background-position:2px;
+	padding: 4px;
+	margin-top:2px;
+	border-radius: 5px 5px 5px;
+	border: 1px solid blue;
+	text-align: center;
+	position:relative;
+	padding-left : 1em;
+	padding-right : 1em;
+}
+
+
+
 .ef .name, .code, .p_name .p_code{
 	display: inline-block;  
 	color : black;
@@ -376,9 +478,40 @@ i.name{
 	padding-right : 1em;
 	border:0;
 }
+
+.partsGroups .group_name_title{
+	display: inline-block;
+	color : black;
+	font-size: 15px;
+	width:220px;
+}
+.partsGroups .group_code_title{
+	display: inline-block;
+	color : black;
+	font-size: 15px;
+	width:220px;
+}
+
+.group_name_title, .group_code_title {
+	display: inline-block;
+	/* width : 140px;  */
+	background-color: #cecece;
+	background-size: 20px 20px;
+	background-repeat:no-repeat;
+	background-position:2px;
+	padding: 2px;
+	border-radius: 5px 5px 5px;
+	border: 1px solid blue;
+	text-align: center;
+	position:relative;
+	padding-left : 1em;
+	padding-right : 1em;
+}
+
+
 span.name, span.code, span.teXeq{
 	display: inline-block;
-	/* width : 40px;  */
+	/* width : 140px;  */
 	background-color: #f8f8ff;
 	background-size: 20px 20px;
 	background-repeat:no-repeat;

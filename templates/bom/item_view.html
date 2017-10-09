@@ -8,22 +8,31 @@
 	<div class="container_main">
 
 	<div style="padding-top:0px;" id="home" class="container">
-        <input type="hidden" id="pro_id" value="{{pro_id}}">
  		<div class="panel-group" id="accordion">
+
     		<div class="panel panel-default">
     			<div class="panel-heading">
 					<table border="0" width="100%">
 					<tr>
-						<td>
+						<td width="200">
       						<h4 class="panel-title">
         						<a data-toggle="collapse" href="#eLevels">입출고 현황</a>
       						</h4>
 						</td>
+						<td width="120">
+        					[프로젝트 선택]
+						</td>
+						<td width="220" id="selectProjectList" class="selectProjectList">
+
+						</td>
+  						<td width="120">
+        					[날짜 선택]
+						</td>
                         <td>
-                            <input type="text" id="from"> ~ <input type="text" id="to">
+                            <input type="text" id="from" style="width:100px;"> ~ <input type="text" id="to" style="width:100px;">
                         </td>
-                        <td align="right">
-                            <button type="submit" name="searchItemViewForm" id="searchItemViewForm" class="btn">Search</button>
+                        <td width="100" align="right">
+                            <button type="submit" name="searchItemViewResultForm" id="searchItemViewResultForm" class="btn">Search</button>
                         </td>
 					</tr>
 					</table>
@@ -33,21 +42,8 @@
 					<div class="panel-body">
                         <ul id="tree_for_tech_item">
                             <ul id="view">
-                            <table class="bom_view">
-                                <thead>
-                                    <tr>
-                                        <th colspan="2" class="bom_th">입력</th>
-                                        <th colspan="2" class="bom_th">출력</th>
-                                        <th colspan="2" class="bom_th">조정</th>
-                                        <th class="bom_th">재고량</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                <tr><td>2017-09-01</td><td>500</td><td>2017-09-01</td><td>100</td><td>undefined</td><td>undefined</td></tr><tr><td>2017-09-02</td><td>150</td><td>2017-09-02</td><td>150</td><td>undefined</td><td>undefined</td></tr><tr><td>undefined</td><td>undefined</td><td>undefined</td><td>undefined</td><td>2017-09-11</td><td>-100</td></tr>
-
-                                </tbody>
-                            </table>
-                                </ul>
+                                <!-- 재고현황 출력 -->
+                            </ul>
 						</ul>
 
 					</div>

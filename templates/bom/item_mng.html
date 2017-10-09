@@ -8,9 +8,28 @@
 	<div class="container_main">
 
 	<div style="padding-top:0px;" id="home" class="container">
-        <input type="hidden" id="pro_id" value="{{pro_id}}">
  		<div class="panel-group" id="accordion">
-    		<div class="panel panel-default">
+			<div class="panel panel-default">
+    			<div class="panel-heading">
+					<table border="0" width="100%">
+					<tr>
+						<td width="150">
+      						<h4 class="panel-title">
+        						<a data-toggle="collapse" href="#topLevels">프로젝트 선택</a>
+      						</h4>
+						</td>
+						<td width="200" id="selectProjectList" class="selectProjectList">
+
+						</td>
+                        <td align="left">
+                            <button type="submit" name="selectProjectItemBtn" id="selectProjectItemBtn" class="btn">Select</button>
+                        </td>
+					</tr>
+					</table>
+    			</div>
+			</div>
+
+    		<div class="panel panel-default" id="topLevels">
     			<div class="panel-heading">
 					<table border="0" width="100%">
 					<tr>
@@ -19,6 +38,7 @@
         						<a data-toggle="collapse" href="#eLevels">부품재고 관리</a>
       						</h4>
 						</td>
+
                         <td align="right">
                             <button type="submit" name="saveItemForm" id="saveItemForm" class="btn">Save</button>
                             <button type="submit" name="deleteItemForm" id="deleteItemForm" class="btn" style="display:none;">Delete</button>
@@ -26,6 +46,7 @@
 					</tr>
 					</table>
     			</div>
+
 
     			<div id="eLevels" class="panel-collapse collapse in">
 					<div class="panel-body">
@@ -37,10 +58,10 @@
 			<div id="viewers" class="panel panel-default"> <!-- class="container"  -->
     			<div class="panel-heading"  id="JSONheader">
       				<h4 class="panel-title">
-        				<a data-toggle="collapse"  href="#JSONclient" >JSON Viewer : save button for updated json</a>
+        				<a data-toggle="collapse"  href="#JSONclient" >JSON Viewer(save button for updated json)</a>
       				</h4>
     			</div>
-    			<div id="JSONclient" class="panel-collapse collapse in">
+    			<div id="JSONclient" class="panel-collapse collapse out">
 					<div class="panel-body">
 						<h3> json editor with file : <span id="jsonSpan"> </span></h3>
 						<div id="jsoneditor"></div>

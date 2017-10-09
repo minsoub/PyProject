@@ -33,9 +33,20 @@ def item_getData():
        print(result);
        result = json.dumps(result)
        return Response(result, mimetype='application/json')
+    try:
+        if request.method == 'POST':
+            pro_id = request.form['pro_id']
+        else:
+            pro_id = request.args.get('pro_id')
+    except KeyError:
+        pro_id = None
+        result = {"error": "파라미터 정보가 존재하지 않습니다!!!"}
+        result = json.dumps(result)
+        print(result)
+        return Response(result, mimetype='application/json')
 
     bom = BomMngReg(request, session)
-    result = bom.bom_item_getdata()
+    result = bom.bom_item_getdata(pro_id)
     if result is None:  # not data
        result = {'msg': ["None"]}
        output_string = json.dumps(result)
@@ -85,12 +96,24 @@ def bom_item_view():
     if 'user_id' not in session:
         return render_template("admin/index.html")
 
-    bomcls = BomMngReg(request, session)
-    result = bomcls.bom_item_getdata()
-    output_string = json_util.dumps(result)
+    try:
+        if request.method == 'POST':
+            pro_id = request.form['pro_id']
+        else:
+            pro_id = request.args.get('pro_id')
+    except KeyError:
+        pro_id = None
 
-    resp = current_app.make_response(render_template('/bom/item_view.html', result=output_string))
-    return resp
+    if pro_id is None:
+        resp = current_app.make_response(render_template('/bom/item_view.html', result=''))
+        return resp
+    else:
+        bomcls = BomMngReg(request, session)
+        result = bomcls.bom_item_getdata(pro_id)
+        output_string = json_util.dumps(result)
+
+        resp = current_app.make_response(render_template('/bom/item_view.html', result=output_string))
+        return resp
 
 # test
 @bom.route("/bom/bom_mng2")

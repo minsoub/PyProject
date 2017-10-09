@@ -183,6 +183,7 @@ function drawProcess(btn){
 	}
 
 	startX=json.RESdraw.partsGroup.xInterval/2-json.RESdraw.processGroup.width/2;
+	console.log(JSON.stringify(pro_json));
 	for (i=0;i<pro_json.processGroups.length;i++){
 		if (i) startX+=json.RESdraw.partsGroup.xInterval+(json.partsGroups[i-1].parts.length-1)*json.RESdraw.part.xInterval;
 		startY=startH+maxTechLevelHeight/2-pro_json.processGroups[i].thisHeight/2;
@@ -210,13 +211,17 @@ function drawProcess(btn){
 							break;
 						}
 					}
-					if (arrow.is_main) arrow.value=1;
-					else{
-						if (act.inputs[ii].value.hasOwnProperty('ts')){
-							ts=act.inputs[ii].value.ts.split(',');
-							arrow.value=ts;
-						}else arrow.value=act.inputs[ii].value;
-					}
+					// TODO : JMS update => w_tm, w_qty  추가
+					console.log("wt_qty : " + act.inputs[ii].w_qty);
+					arrow.value = act.inputs[ii].w_qty+"("+act.inputs[ii].w_tm+")";
+					//if (arrow.is_main) arrow.value=1;
+					//else{
+					//	if (act.inputs[ii].value.hasOwnProperty('ts')){
+					//		ts=act.inputs[ii].value.ts.split(',');
+					//		arrow.value=ts;
+					//	}else arrow.value=act.inputs[ii].value;
+					//}
+
 					if (arr_l_id<i) before_in.push(arrow);
 					else after_in.push(arrow);
 				}
@@ -233,10 +238,13 @@ function drawProcess(btn){
 							break;
 						}
 					}
-					if (act.outputs[ii].value.hasOwnProperty('ts')){
-						ts=act.outputs[ii].value.ts.split(',');
-						arrow.value=ts;
-					}else arrow.value=act.outputs[ii].value;
+					// TODO : JMS update => w_tm, w_qty  추가
+					arrow.value = act.outputs[ii].w_qty+"("+act.outputs[ii].w_tm+")";
+					//if (act.outputs[ii].value.hasOwnProperty('ts')){
+					//	ts=act.outputs[ii].value.ts.split(',');
+					//	arrow.value=ts;
+					//}else arrow.value=act.outputs[ii].value;
+
 					if (arr_l_id<i) before_out.push(arrow);
 					else after_out.push(arrow);
 				}
@@ -435,13 +443,16 @@ function drawProcess(btn){
 								break;
 							}
 						}
-						if (arrow.is_main) arrow.value=1;
-						else{
-							if (act.inputs[ii].value.hasOwnProperty('ts')){
-								ts=act.inputs[ii].value.ts.split(',');
-								arrow.value=ts;
-							}else arrow.value=act.inputs[ii].value;
-						}
+					    // TODO : JMS update => w_tm, w_qty  추가
+					    arrow.value = act.inputs[ii].w_qty+"("+act.inputs[ii].w_tm+")";
+						//if (arrow.is_main) arrow.value=1;
+						//else{
+						//	if (act.inputs[ii].value.hasOwnProperty('ts')){
+						//		ts=act.inputs[ii].value.ts.split(',');
+						//		arrow.value=ts;
+						//	}else arrow.value=act.inputs[ii].value;
+						//}
+
 						if (arr_l_id<i) before_in.push(arrow);
 						else after_in.push(arrow);
 					}
@@ -458,10 +469,12 @@ function drawProcess(btn){
 								break;
 							}
 						}
-						if (act.outputs[ii].value.hasOwnProperty('ts')){
-							ts=act.outputs[ii].value.ts.split(',');
-							arrow.value=ts;
-						}else arrow.value=act.outputs[ii].value;
+					    // TODO : JMS update => w_tm, w_qty  추가
+					    arrow.value = act.outputs[ii].w_qty+"("+act.outputs[ii].w_tm+")";
+						//if (act.outputs[ii].value.hasOwnProperty('ts')){
+						//	ts=act.outputs[ii].value.ts.split(',');
+						//	arrow.value=ts;
+						//}else arrow.value=act.outputs[ii].value;
 						if (arr_l_id<i) before_out.push(arrow);
 						else after_out.push(arrow);
 					}

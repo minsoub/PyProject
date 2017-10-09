@@ -357,7 +357,7 @@ function changed_el_ef(menu,arr_l_id, arr_f_id){
 			break;
 		case "add_el" :
 			var l_id=arr_l_id;
-			var f_id=json.partsGroups[arr_l_id].parts[arr_f_id].f_id-1;
+			//var f_id=json.partsGroups[arr_l_id].parts[arr_f_id].f_id-1;
 			$("#tree_for_tech .context-menu-one").each(function(){
 				var regExp = /\(([^)]+)\)/g;
 				if ($(this).text()){

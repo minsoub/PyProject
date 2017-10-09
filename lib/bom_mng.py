@@ -189,7 +189,8 @@ class BomMngReg:
             return None
 
     # 재고관리 정보를 데이터베이스에서 조회한다.
-    def bom_item_getdata(self):
+    # 파라미터 : pro_id (프로젝트 아이디)
+    def bom_item_getdata(self, pro_id):
         # dbname  : session['dbname']
         # colname : itemCollection
         dbname = self.ses['dbname']
@@ -197,7 +198,7 @@ class BomMngReg:
         client = cls.getConn(dbname)
         bom = cls.getCollection('itemCollection')
 
-        data = bom.find()
+        data = bom.find({'projectId': pro_id})
         cls.Close()
         if data.count() > 0:
             return data

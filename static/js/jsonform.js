@@ -112,17 +112,17 @@ function read_json()
 }
 
 // 부품 재고관리 아이템을 생성한다.
-function read_item_json()
+function read_item_json(item_project_id)
 {
     var data = {
-      "projectId": $("#pro_id").val(),
+      "projectId": item_project_id,
 	  "partsGroups": [
 		{
-			"name": "페인트",
+			"name": "샘플그룹",
 			"code": "sample_code",
 			"parts": [
 				{
-					"p_name": "내장페이트",
+					"p_name": "샘플아이템",
 					"p_code": "code1",
 					"unit": "3M",
 					"ksk": "EA",

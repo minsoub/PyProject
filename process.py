@@ -278,3 +278,76 @@ def process_delete():
 
     return Response(output_string, mimetype='application/json')
 
+# Gantt Chart 출력 페이지
+@process.route("/process/gantt_chart", methods=['GET', 'POST'])
+def gantt_chart():
+    if 'user_id' not in session:
+        return render_template("admin/index.html")
+    # 프로젝트 아이디 체크 - 없으면 프로젝트 선택 페이지로 이동 시켜야 한다.
+    try:
+       if request.method == 'POST':
+          pro_id = request.form['pro_id']
+       else:
+          pro_id = request.args.get('pro_id')
+    except KeyError:
+       pro_id = None
+
+    if pro_id is None or pro_id == '':
+       bom = BomMngReg(request, session)
+       pro_lst = bom.get_project_list()
+       resp = current_app.make_response(render_template("/process/project_selection.html", data=pro_lst))
+       return resp
+    else:
+        bom = BomMngReg(request, session)
+        bom.set_pro_id(pro_id)
+        name = bom.get_project_name()
+        # get bom_id
+        bomData = bom.process_group_getdata(pro_id)
+
+        if bomData.count() > 0:
+            #output = json_util.dumps(bomData)
+            for cursor in bomData:
+                doc = dict(cursor)
+                bom_id = str(doc['_id'])
+
+        resp = current_app.make_response(render_template("/process/gantt_chart.html",  pro_id=pro_id, bom_id=bom_id, pro_name=name))
+        return resp
+
+# Gantt Chart 출력 페이지
+@process.route("/process/gantt_chart2", methods=['GET', 'POST'])
+def gantt_chart2():
+    if 'user_id' not in session:
+        return render_template("admin/index.html")
+    # 프로젝트 아이디 체크 - 없으면 프로젝트 선택 페이지로 이동 시켜야 한다.
+    try:
+       if request.method == 'POST':
+          pro_id = request.form['pro_id']
+       else:
+          pro_id = request.args.get('pro_id')
+    except KeyError:
+       pro_id = None
+
+    if pro_id is None or pro_id == '':
+       bom = BomMngReg(request, session)
+       pro_lst = bom.get_project_list()
+       resp = current_app.make_response(render_template("/process/project_selection.html", data=pro_lst))
+       return resp
+    else:
+        bom = BomMngReg(request, session)
+        bom.set_pro_id(pro_id)
+        name = bom.get_project_name()
+        # get bom_id
+        bomData = bom.process_group_getdata(pro_id)
+
+        if bomData.count() > 0:
+            #output = json_util.dumps(bomData)
+            for cursor in bomData:
+                doc = dict(cursor)
+                bom_id = str(doc['_id'])
+
+        resp = current_app.make_response(render_template("/process/gantt_chart2.html",  pro_id=pro_id, bom_id=bom_id, pro_name=name))
+        return resp
+
+
+
+

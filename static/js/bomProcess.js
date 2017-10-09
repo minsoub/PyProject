@@ -106,8 +106,14 @@ function populate_technology(){
 								otherInputRemove='<input type="button" value="Remove" class="ef_button" onclick="remove_io_act_tech_tl(this)">';
 								inputText='<span class="mylabel">other input</span>';
 								otherBullet='<span class="bullet"><i class="fa fa-minus-circle" style="color:green"></i></span>';
+								mainInputValue='<span class="label">공정시간:</span><span style="width:20px;" contenteditable data-type="value" class="value editable w_tm">'+act.inputs[l].w_tm+'</span>'
+								              +'<span class="label">수량:</span><span style="width:20px;" contenteditable data-type="value" class="value editable w_qty">'+act.inputs[l].w_qty+'</span>';
 								i_id=l+1;
-							}else {i_id=1; mainInputValue='<span class="label">H:</span><span contenteditable data-type="value" class="value editable">1.0</span>';}
+							}else {
+							    i_id=1;
+							    mainInputValue='<span class="label">공정시간:</span><span style="width:20px;" contenteditable data-type="value" class="value editable w_tm">'+act.inputs[l].w_tm+'</span>'
+							                  +'<span class="label">수량:</span><span style="width:20px;" contenteditable data-type="value" class="value editable w_qty">'+act.inputs[l].w_qty+'</span>';
+							}
 							mainInputLi.append('').html(otherBullet+inputText
 												+'<span class="mymargin"><span data-type="inputMenu" class="select_menu context-menu-one btn btn-neutral">'
 												+f_id_text
@@ -126,8 +132,9 @@ function populate_technology(){
 							mainInputLi.append('').html('<span class="mylabel" style="color:green;font-size:14px;">main input</span>'
 												+'<span class="mymargin"><span  data-type="inputMenu" class="select_menu context-menu-one btn btn-neutral">'
 												+'<i class="fa fa-caret-square-o-right"  style="font-size:12px;"></i></span>'
-												+'<span class="label">H:</span>'
-												+'<span contenteditable data-type="value" class="value editable">1.0</span></span>'
+												+'<span class="label">공정시간:</span><span contenteditable data-type="value" class="value editable w_tm">1.0</span>'
+												+'<span class="label">수량:</span><span contenteditable data-type="value" class="value editable w_qty">1.0</span>'
+												+'</span>'
 												+'<span class="label">i_id</span><span class="id">'+i_id+'</span>'
 												+'<span class="aligh_button">'
 													+'<input type="button" value="Add" class="io_button io_after" onclick="add_io_act_tech_tl(this)">'
@@ -158,13 +165,17 @@ function populate_technology(){
 								otherOutputRemove='<input type="button" value="Remove" class="ef_button" onclick="remove_io_act_tech_tl(this)">';
 								outputText='<span class="mylabel">other output</span>';
 								o_id=l+1;
-							}else {outputText='<span class="mylabel" style="color:green;font-size:14px;">main output</span>'; o_id=1;}
+							}else {
+							    outputText='<span class="mylabel" style="color:green;font-size:14px;">main output</span>';
+							    o_id=1;
+							}
 
 							mainOutputLi.append('').html('<span class="bullet"><i class="fa fa-minus-circle" style="color:green"></i></span>'
 												+outputText
 												+'<span class="mymargin"><span class="select_menu context-menu-one btn btn-neutral">'
 												+f_id_text+'<i class="fa fa-caret-square-o-right"  style="font-size:12px;"></i></span>'
-												+'<span class="label">H:</span><span contenteditable data-type="value" class="value editable">1.0</span>'
+												+'<span class="label">공정시간:</span><span contenteditable data-type="value" class="value editable w_tm">'+act.outputs[l].w_qty+'</span>'
+												+'<span class="label">수량:</span><span contenteditable data-type="value" class="value editable w_qty">'+act.outputs[l].w_qty+'</span>'
 												+'<span class="label">o_id</span><span class="id">'+o_id+'</span>'
 												+'<span class="aligh_button">'
 													+'<input type="button" value="Add" class="ef_button ef_after" onclick="add_io_act_tech_tl(this)">'
@@ -181,7 +192,8 @@ function populate_technology(){
 												+outputText
 												+'<span class="mymargin"><span class="select_menu context-menu-one btn btn-neutral">'
 												+'<i class="fa fa-caret-square-o-right"  style="font-size:12px;"></i></span>'
-												+'<span class="label">H:</span><span contenteditable data-type="value" class="value editable">1.0</span>'
+												+'<span class="label">공정시간:</span><span contenteditable data-type="value" class="value editable w_tm">1.0</span>'
+												+'<span class="label">수량:</span><span contenteditable data-type="value" class="value editable w_qty">1.0</span>'
 												+'<span class="label">o_id</span><span class="id">'+o_id+'</span>'
 												+'<span class="aligh_button">'
 													+'<input type="button" value="Add" class="ef_button ef_after" onclick="add_io_act_tech_tl(this)">'
@@ -691,7 +703,8 @@ function add_io_act_tech_tl(btn){
 							+inputText
 							+'<span class="mymargin"><span class="select_menu context-menu-one btn btn-neutral">'
 							+'<i class="fa fa-caret-square-o-right"  style="font-size:12px;"></i></span>'
-							+'<span class="label">H:</span><span contenteditable data-type="value" class="value editable">1.0</span>'
+							+'<span class="label">공정시간:</span><span contenteditable data-type="value" class="value editable w_tm">1.0</span>'
+							+'<span class="label">수량:</span><span contenteditable data-type="value" class="value editable w_qty">1.0</span>'
 							+'<span class="label">'+id_name+'</span><span class="id">'+cur_id+'</span>'
 							+'<span class="aligh_button">'
 								+'<input type="button" value="Add" class="ef_button ef_after" onclick="add_io_act_tech_tl(this)">'
@@ -957,7 +970,8 @@ function update_all_tech_io_f_id(){
 					inp.f_id=parseInt(menu[2].substring(0,menu[2].length-1));
 					inp.comment=full_name;
 					//console.log("value : " + $(this).find('li.mainInputLi').find('.value').eq(0).text());
-					inp.value = $(this).find('li.mainInputLi').find('.value').eq(0).text();
+					inp.w_tm = $(this).find('li.mainInputLi').find('.w_tm').eq(0).text();       // 투입시간
+					inp.w_qty = $(this).find('li.mainInputLi').find('.w_qty').eq(0).text();       // 투입수량
 					inps.push(inp);
 					main_input_exist=true;
 				}
@@ -972,7 +986,8 @@ function update_all_tech_io_f_id(){
 					        inp.f_id=parseInt(menu[2].substring(0,menu[2].length-1));
 					        inp.comment=full_name;
 					        //console.log("value : " + $(this).find('li.otherInputLi').find('.value').eq(0).text());
-					        inp.value = $(this).find('.value').eq(0).text();
+					        inp.w_tm = $(this).find('.w_tm').eq(0).text();      // 투입시간
+					        inp.w_qty = $(this).find('.w_qty').eq(0).text();    // 투입수량
 					        inps.push(inp);
 						}
 					});
@@ -992,7 +1007,8 @@ function update_all_tech_io_f_id(){
 					menu=full_name.split('(');
 					out.f_id=parseInt(menu[2].substring(0,menu[2].length-1));
 					out.comment=full_name;
-					out.value = $(this).find('li.mainOutputLi').find('.value').eq(0).text();
+					out.w_tm = $(this).find('li.mainOutputLi').find('.w_tm').eq(0).text();      // 투입시간
+					out.w_qty = $(this).find('li.mainOutputLi').find('.w_qty').eq(0).text();    // 투입수량
 					outs.push(out);
 					main_output_exist=true;
 				}
@@ -1006,7 +1022,8 @@ function update_all_tech_io_f_id(){
 							menu=full_name.split('(');
 							out.f_id=parseInt(menu[2].substring(0,menu[2].length-1));
 							out.comment=full_name;
-							out.value = $(this).find('.value').eq(0).text();
+							out.w_tm = $(this).find('.w_tm').eq(0).text();
+							out.w_qty = $(this).find('.w_qty').eq(0).text();
 							outs.push(out);
 						}
 					});

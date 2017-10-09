@@ -1,4 +1,5 @@
 var item_json;      // 부품 재고관리 JSON 데이터
+var item_project_id = undefined;   // 부품 재고관리 프로젝트 아이디
 
 // 재고관리 저장
 $(document).on("click", "#saveItemForm", function (e) {
@@ -24,6 +25,27 @@ $(document).on("click", "#deleteItemForm", function (e) {
 		//json_editor_update();
 });
 
+$(document).on("click", "#selectProjectItemBtn", function (e) {
+	e.preventDefault();
+
+    // 프로젝트를 선택했는지 확인한다.
+    if ($("#project_id").val() == "")
+    {
+        // 데이터를 선택하지 않았다면 출력 된 데이터를 초기화한다.
+        items_clear();
+        item_project_id = undefined;
+    }else {
+        // 선택된 프로젝트 아이디로 재고 데이터를 조회한다.
+        item_project_id = $("#project_id").val();
+        read_json_item_getdata();
+    }
+});
+// 화면에 출력된 데이터를 초기화 한다.
+function items_clear()
+{
+    $("#tree_for_tech_item>li").remove();
+    item_json = undefined;
+}
 // 재고관리 정보를 데이터베이스에 저장한다.
 function save_item_json(url_loc,menu1,f_id1,newRange1, mode){
     $.ajax
@@ -63,9 +85,24 @@ function save_item_json(url_loc,menu1,f_id1,newRange1, mode){
 }
 
 // 부품 재고관리 데이터를 로드하다.
+// 선택된 프로젝트 아이디를 사용해서 재고 데이터를 조회한다.
 function read_json_item_getdata()
 {
-    item_mng_get_data();
+    if (item_project_id != undefined)
+    {
+        item_mng_get_data();
+    }else {
+        project_list_ajax_get_data();   // common.js
+
+    }
+}
+// 프로젝트 콤보박스 데이터를 세팅한다.
+function setItemProjectComboInit(data)
+{
+    console.log("return data : " + data);
+    $("#selectProjectList>").remove();
+
+    $("#selectProjectList").append(data);
 }
 
 // 부품 재고관리 데이터베이스에서 데이터를 가져온다.
@@ -80,7 +117,7 @@ function item_mng_get_data(mode)
        // dataType : 'text',  //dataType : 'json' ==> 200 OK, SyntaxError
 		cache:false,
         url: "/bom/item_getData",
-        data: {pro_id: $("#pro_id").val()},
+        data: {pro_id: item_project_id},
 		dataType: 'json',
         success: function(data) {
 		   str = JSON.stringify(data);
@@ -92,22 +129,24 @@ function item_mng_get_data(mode)
 		       $("#deleteItemForm").hide();
 		       console.log("data not found : " + data);
                result =  "";
-               //firstItemInit(result);
-
 		   }else {
 		       $("#deleteItemForm").show();
 		       str = str.substring(1, str.length-1);
 		       data=JSON.parse(str);
 		       console.log("data found : " + data);
 		       result = data;
-               //firstItemInit(result);
 		   }
         },
         error: 	function(request,status,error){
         alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error)}
 	}).done(function( msg ) {
-        console.log( "item_mng_get_data loaded  msg : " + result );
-        firstItemInit(result);
+	    if (result == "") {
+	        alert("아이템 데이터가 존재하지 않습니다!!!");
+	        firstItemInit(result);   // 빈데이터 항목 생성
+	    } else {
+	        console.log( "item_mng_get_data loaded  msg : " + result );
+            firstItemInit(result);
+	    }
     });
 }
 
@@ -118,7 +157,7 @@ function firstItemInit(data)
 {
     console.log("firstItemInit called...." + data);
     if (data == "") {
-        from_ajax_data = read_item_json();  // TODO: jsonform.js 참조
+        from_ajax_data = read_item_json(item_project_id);  // TODO: jsonform.js 참조
     }else {
         from_ajax_data = data;
     }
@@ -153,6 +192,7 @@ function item_json_editor_update(){
 
 // 재고관리 데이터 출력
 // load된 JSON 데이터를 HTML로 변환해서 화면에 출력한다.
+// 그룹 타이틀은 한번만 나올 수 있도록 출력한다.
 function item_populate_json()
 {
     console.log("item_populate_json called");
@@ -160,19 +200,35 @@ function item_populate_json()
 	var tree_for_tech = $('#tree_for_tech_item');
 	var cur_t_id=1;
 
+	// 부품 그룹 타이틀
+	var techLevelTitleLi=$('<li style="margin-bottom:5px;" />').addClass('techLevelLi');
+	    techLevelTitleLi.addClass('partsGroups');
+		techLevelTitleLi.append('').html('<span class="bullet">&nbsp;&nbsp;&nbsp;</span>'
+					+'<span class="group_name_title">부품그룹명</span>'
+					+'<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>'
+					+'<span class="group_code_title">부품그룹코드</span>'
+					+'<span>&nbsp;&nbsp;</span>'
+					);
+    tree_for_tech.append(techLevelTitleLi);
+
 	for (var i = 0; i < item_json.partsGroups.length; i++) {
 		var arr_tl_id=i;
 		var tl=item_json.partsGroups[i];
 		tl.tl_id=(i+1);
+
 		var techLevelLi=$('<li/>').addClass('techLevelLi');
 		techLevelLi.addClass('partsGroups');
+
 		if (item_json.partsGroups.length!=1){
 			tlAddRemoveButton='<span class="aligh_button">'
 				+'<input type="button" value="Add" class="el_button el_after" onclick="add_item_act_tech_tl(this)">'
 				+'<input type="button" value="Remove" class="el_button" onclick="remove_io_act_tech_tl(this)">'
 				+'</span>';
 		}else {
-		    tlAddRemoveButton='<input type="button" value="Add" class="el_button el_after" onclick="add_item_act_tech_tl(this)">';
+		    tlAddRemoveButton='<span class="aligh_button">'
+				+'<input type="button" value="Add" class="el_button el_after" onclick="add_item_act_tech_tl(this)">'
+				+'<input type="button" value="Remove" class="el_button" onclick="remove_io_act_tech_tl(this)" disabled>'
+				+'</span>';
 		}
 		techLevelLi.append('').html('<span class="bullet"><i class="fa fa-minus-circle" style="color:green"></i></span>'
 							+'<span contenteditable data-type="name" class="name editable">'+tl.name+'</span>'
@@ -180,8 +236,26 @@ function item_populate_json()
 							+'<span contenteditable data-type="code" class="code editable">'+tl.code+'</span>'
 							+'<span>&nbsp;&nbsp;</span>'
 							+tlAddRemoveButton);
-
+        // 부품 타이틀
 		var techUl=$('<ul/>').addClass('techUl');
+        var techTitleLi=$('<li style="margin-bottom:5px;" />').addClass('techTitleLi');
+            techTitleLi.addClass('ef');
+            techTitleLi.append('').html('<span class="bullet">&nbsp;&nbsp;&nbsp;</span>'
+						+'<span  class="p_name_title ">부품명</span>'
+						+'<span>&nbsp;&nbsp;</span>'
+						+'<span  class="p_code_title ">부품코드</span>'
+						+'<span>&nbsp;&nbsp;</span>'
+						+'<span  class="unit_title ">단위</span>'
+						+'<span>&nbsp;&nbsp;</span>'
+						+'<span  class="ksk_title ">규격</span>'
+						+'<span>&nbsp;&nbsp;</span>'
+						+'<span class="qty_title ">재고수량</span>'
+						+'<span>&nbsp;&nbsp;</span>'
+						+'<span class="aligh_button">'
+						+' '
+                        +'</span>');
+        techUl.append(techTitleLi);
+
 		for (var j = 0; j <tl.parts.length; j++){
 			var tech=tl.parts[j];
 			var arr_t_id=j;
@@ -363,7 +437,8 @@ function item_populate_json()
 	}
 }
 
-//  부품재고관리 Add
+// 부품재고관리에서 각 Add 버튼에 대한 제어를 수행한다.
+// 부품재고관리 Add
 function add_item_act_tech_tl(btn){
 	var cur=$(btn).closest('li');
 
@@ -510,10 +585,13 @@ function add_item_act_tech_tl(btn){
 
 	}else if ($(cur).hasClass('techLevelLi')){  // 그룹품목 Add
 		cur.clone().insertAfter(cur);
-		$(cur).next().find('.techLi').not(':first').remove();
-		if ($(cur).closest('.techLevelLi').length==2){
-			$(cur).closest('.techLevelLi').find('[value=Remove]').removeAttr('disabled');
-		}
+		$(cur).next().find('.techLi').not(':first').next().remove();
+		console.log("length : " + $(cur).closest('.techLevelLi').length);
+
+		//if ($(cur).closest('.techLevelLi').length==2){
+			$(cur).next().closest('.techLevelLi').find('[value=Remove]').removeAttr('disabled');
+		//}
+
 		$(cur).next().find('li.techLi').find('[value=Remove]').eq(0).attr('disabled','disabled');
 
 		// 항목 아이템 값을 초기화한다.
@@ -547,9 +625,15 @@ function add_item_act_tech_tl(btn){
 }
 
 // HTML에 등록된 데이터를 JSON 데이터로 생성한다.
+// item_project_id 가 존재하는지 체크해야 한다.
 function update_all_item(){
 
-    var projectId = item_json.projectId;
+    if (item_project_id == undefined)
+    {
+        alert("프로젝트 아이디가 존재하지 않습니다!!!");
+        return;
+    }
+    //var projectId = item_project_id;  // item_json.projectId;
     var _id = item_json._id;
     console.log("[update_all_item debug] _id = "+_id);
     if (_id == "")
@@ -557,17 +641,18 @@ function update_all_item(){
         _id = "";
     }
 	item_json.partsGroups.length=0;
-	item_json.projectId = projectId;
+	item_json.projectId = item_project_id;
 	item_json._id = _id;
 
 	var tls=[], tl={}, parts=[], part={};
 
-	$('#tree_for_tech_item').find('li.techLevelLi').each(function(){
+	$('#tree_for_tech_item').find('li.techLevelLi').next().each(function(){
 		tl={};
 		tl.name=$(this).find('.name').eq(0).html();
 		tl.code=$(this).find('.code').eq(0).html();
+		console.log("tl.name : " + tl.name)
 		parts=[];
-		$(this).find('li.techLi').each(function(){
+		$(this).find('li.techLi').not('li.techTitleLi').each(function(){
 			part={}, capacity={};
 
 			part.p_name=$(this).find('.p_name').eq(0).html();
@@ -578,14 +663,19 @@ function update_all_item(){
 			part.hasLoadRegion=$(this).find('.hasLoadRegion').eq(0).html();
 			part.eq=$(this).find('.eq').eq(0).html();
 
+            console.log("part p_name : " + part.p_name);
 			inputs=[];
 			$(this).find('li.mainInputLi').each(function(){
 				act={};
 				if ($(this).find('.date').eq(0).html()){
 					act.date=$(this).find('.date').eq(0).html();
+				}else {
+				    act.date="";
 				}
 				if ($(this).find('.qty').eq(0).html()){
 					act.qty=parseInt($(this).find('.qty').eq(0).html());
+				}else {
+				    act.qty = 0;
 				}
 				inputs.push(act);
 			});
@@ -595,9 +685,13 @@ function update_all_item(){
 				act={};
 				if ($(this).find('.date').eq(0).html()){
 					act.date=$(this).find('.date').eq(0).html();
+				}else {
+				    act.date="";
 				}
 				if ($(this).find('.qty').eq(0).html()){
 					act.qty=parseInt($(this).find('.qty').eq(0).html());
+				}else {
+				    act.qty = 0;
 				}
 				outputs.push(act);
 			});
@@ -607,9 +701,13 @@ function update_all_item(){
 				act={};
 				if ($(this).find('.date').eq(0).html()){
 					act.date=$(this).find('.date').eq(0).html();
+				}else {
+				    act.date = "";
 				}
 				if ($(this).find('.qty').eq(0).html()){
 					act.qty=parseInt($(this).find('.qty').eq(0).html());
+				}else {
+				    act.qty = 0;
 				}
 				adjusts.push(act);
 			});
@@ -662,27 +760,32 @@ $(document).on('blur', '#tree_for_tech_item [contenteditable]', function() {
     }
     return;
 });
-
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // JSON 데이터를 받아서 입출고표 화면을 출력한다.
 // MongoDB에서 JSON 데이터 조회 후 HTML 페이지에서 바로 사용시
 // safe를 사용해야 한다.
 function read_json_view_print(result)
 {
-    if (result != "")
+    if (item_project_id == undefined)
     {
-        var str = JSON.stringify(result);
-	    str = str.substring(1, str.length-1);
-	    console.log("str : " + str);
-	    item_json=JSON.parse(str);
+        project_list_ajax_get_data();
+    }else {
+        if (result != "")
+        {
+            var str = JSON.stringify(result);
+	        str = str.substring(1, str.length-1);
+	        console.log("str : " + str);
+	        item_json=JSON.parse(str);
 
-        make_bom_view_print("", "");  // 입출고표 화면을 생성해서 출력한다.
+            make_bom_view_print($("#from").val(), $("#to").val());  // 입출고표 화면을 생성해서 출력한다.
+	    }
 	}
 }
 
 // 입출고표 화면을 생성한다.
 function make_bom_view_print(from, to)
 {
-    console.log("item_populate_json called");
+    console.log("make_bom_view_print called");
 	$("#tree_for_tech_item> #view").remove();
 	$("#tree_for_tech_item>ul").remove();
     var table=$("#tree_for_tech_item").closest('#tree_for_tech_item');
@@ -923,21 +1026,57 @@ function table_make_data(row_arr)
 	return tr_data;
 }
 
-$(document).on("click", "#searchItemViewForm", function (e) {
+$(document).on("click", "#searchItemViewResultForm", function (e) {
 		e.preventDefault();
-		if ($("#from").val() == "") {
-		    alert("날짜를 입력하세요!!!");
+		//alert("t1");
+		if ($("#project_id").val() == "") {
+		    alert("프로젝트명을 선택하세요!!!");
 		    return;
+		}else {
+		    item_project_id = $("#project_id").val();
+		   // alert(item_project_id);
 		}
-		if ($("#to").val() == "") {
-		    alert("날짜를 입력하세요!!!");
-		    return;
-		}
-
-        if (item_json == "") {
-            alert("데이터가 존재하지 않습니다!!!");
-            return;
-        }
-        make_bom_view_print($("#from").val(), $("#to").val());
-
+        //make_bom_view_print($("#from").val(), $("#to").val());
+        item_view_get_data("");
 });
+
+function item_view_get_data(mode)
+{
+    var result;
+    isCompleted = false;
+     $.ajax
+    ({
+        type: "POST",
+       // dataType : 'text',  //dataType : 'json' ==> 200 OK, SyntaxError
+		cache:false,
+        url: "/bom/item_getData",
+        data: {pro_id: item_project_id},
+		dataType: 'json',
+        success: function(data) {
+		   str = JSON.stringify(data);
+		   //str = str.substring(1, str.length-1);
+		   console.log("str : " + str);
+		   data=JSON.parse(str);
+		   if (data['msg'] == 'None')
+		   {
+		       console.log("data not found : " + data);
+               result =  "";
+		   }else {
+		       //str = str.substring(1, str.length-1);
+		       data=JSON.parse(str);
+		       console.log("data found : " + data);
+		       result = data;
+		   }
+        },
+        error: 	function(request,status,error){
+        alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error)}
+	}).done(function( msg ) {
+	    if (result == "") {
+	        alert("아이템 데이터가 존재하지 않습니다!!!");
+	    } else {
+	        console.log( "item_mng_get_data loaded  msg : " + result );
+            read_json_view_print(result);
+
+	    }
+    });
+}

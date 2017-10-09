@@ -165,3 +165,44 @@ function formatDate(dateObj,format)
         return curr_month+"-"+curr_date +"-"+curr_year+ " "+curr_hr+":"+curr_min+":"+curr_sc;
     }
 }
+
+// Project 리스트를 조회해서 select box HTML 태그를 생성해서 리턴한다.
+// 모든 페이지에서 공통으로 사용할 수 있도록 한다.
+function project_list_ajax_get_data()
+{
+    $.ajax
+    ({
+        type: "POST",
+       // dataType : 'text',  //dataType : 'json' ==> 200 OK, SyntaxError
+		cache:false,
+        url: "/office/project_json_list",
+        data: { mode: 'search'},
+		dataType: 'json',
+        success: function(data) {
+		    if (data != '') {
+		        str = JSON.stringify(data);
+		        //str = str.substring(1, str.length-1);
+		        console.log("str : " + str);
+		        re_data=JSON.parse(str);
+            }else { // Not data
+                re_data = "";
+            }
+        },
+        error: 	function(request,status,error){
+        alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error)}
+	}).done(function( msg ) {
+        if (re_data != "") {
+            var table_data = "<select class='selectProjectCombo' id='project_id' name='project_id'>";
+            table_data = table_data + "<option value=''>프로젝트를 선택하세요!!!</option>";
+            for (var i=0; i<re_data.length; i++) {
+                table_data = table_data+"<option value='"+re_data[i]._id+"'>"+re_data[i].project_name+"</option>";
+            }
+            table_data = table_data + "</select>";
+
+            console.log("common.js : " + table_data);
+            setItemProjectComboInit(table_data);        // item.js
+        }else {
+            setItemProjectComboInit("");
+        }
+    });
+}

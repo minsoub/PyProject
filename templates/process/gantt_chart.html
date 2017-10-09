@@ -1,0 +1,51 @@
+{% include "/include/gantt_header.html" %}
+
+<div id="section">
+    <!-- Left Menu define  -->
+    {% include "/process/process_menu_inc.html" %}
+    <!-- Left Menu end   -->
+    <!--  https://developers.google.com/chart/interactive/docs/gallery/ganttchart   -->
+	<div class="container_main">
+      	<div style="padding-top:0px;" id="home" class="container">
+        <input type="hidden" id="pro_id" value="{{pro_id}}">
+ 		<div class="panel-group" id="accordion">
+    		<div class="panel panel-default">
+    			<div class="panel-heading">
+					<table border="0" width="100%">
+					<tr>
+						<td>
+      						<h4 class="panel-title">
+        						<a data-toggle="collapse" href="#eLevels">Gantt Chart - {{pro_name}}</a>
+      						</h4>
+						</td>
+                        <td align="right">
+
+                        </td>
+					</tr>
+					</table>
+    			</div>
+              <div id="eLevels" class="panel-collapse collapse in">
+					<div class="panel-body">
+                        <div id="ganttChart"></div>
+                        <div id="eventMessage"></div>
+                    </div>
+              </div>
+            </div>
+        </div>
+  </div>
+</div>
+
+	<script type="text/javascript">
+      $(document).ready(function (e) {
+	      console.log("Time until DOMready: ", Date.now()-timerStart);
+	      read_json_gantt_data('{{pro_id}}', '{{bom_id}}');
+      });
+
+		$(function () {
+
+			// $("#ganttChart").ganttView("setSlideWidth", 600);
+		});
+	</script>
+
+{% include ['/include/bottom.html'] %}
+
